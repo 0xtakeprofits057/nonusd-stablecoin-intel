@@ -1,14 +1,10 @@
-# Non-USD Stablecoin Intelligence — Project Documentation
+# Non-USD Stablecoin Intelligence
 
 **Live dashboard:** https://nonusd.pages.dev
 **Data API:** https://nonusd-data.0xtakeprofits.workers.dev/data
 **Last updated:** March 2026
 
----
-
-## Overview
-
-The Non-USD Stablecoin Intelligence dashboard tracks 40+ non-USD stablecoins across 19 currencies and 11 chains in real-time. It combines a Cloudflare Worker data pipeline (fetching from Token Terminal) with a fully self-contained, single-file HTML dashboard deployed on Cloudflare Pages.
+A real-time intelligence dashboard tracking 40+ non-USD stablecoins across 19 currencies and 11 chains. Built on a Cloudflare Worker data pipeline (sourcing from Token Terminal) and deployed as a single-file HTML dashboard on Cloudflare Pages.
 
 ---
 
@@ -16,49 +12,57 @@ The Non-USD Stablecoin Intelligence dashboard tracks 40+ non-USD stablecoins acr
 
 ```
 Token Terminal API
-   ↓ (daily, 40 parallel requests)
-Cloudflare Worker  →  KV Cache (nexus:data:v2)
-   ↓                       ↑ (22h TTL, background refresh)
-GET /data endpoint  ←  Cloudflare Pages dashboard
+   ↓  (daily cron + on-demand, 40 parallel requests)
+Cloudflare Worker (nonusd-data)
+   ↓                    ↑
+KV Cache (nexus:data:v2, 7-day TTL, 22h stale threshold)
+   ↓
+GET /data endpoint
+   ↓
+Dashboard (nonusd.pages.dev)
+   ↓
+localStorage cache (12h TTL, client-side)
 ```
 
 **Data flow:**
-1. Worker fetches 40 stablecoins from Token Terminal (all 8 metrics, 180-day interval)
-2. Processes into per-asset timeseries, calculates pct changes, peg deviation, velocity
-3. Stores compressed JSON in KV with 7-day expiration
-4. Dashboard fetches from `/data` on load; KV serves cached response (< 50ms) while background refresh runs if stale
+1. Worker fetches 40 stablecoins from Token Terminal (8 metrics, 180-day interval)
+2. Processes per-asset timeseries, pct changes, peg deviation, velocity ratio
+3. Stores compressed JSON in KV (key `nexus:data:v2`, 7-day expiry)
+4. Dashboard fetches from `/data` on load; KV serves cached response (<50ms) while a background refresh runs if data is >22h stale
+5. Dashboard caches the processed result in `localStorage` for 12h to avoid redundant fetches
 
 ---
 
 ## Cloudflare Worker (`nonusd-data`)
 
-**URL:** `https://nonusd-data.0xtakeprofits.workers.dev`
-**Source:** `nonusd-data-worker.js`
-**Wrangler config:** `wrangler.toml`
+**Source:** `cf-deploy/nonusd-data-worker.js`
+**Wrangler config:** `cf-deploy/wrangler.toml`
+**Current version:** v5
 
 ### Endpoints
 
 | Endpoint | Description |
 |----------|-------------|
-| `GET /data` | Returns latest processed JSON from KV (or fetches live if cache miss) |
+| `GET /data` | Returns latest processed JSON from KV (or fetches live on cache miss) |
 | `GET /refresh?key=nexus-admin-2024` | Manually triggers a full data refresh |
-| `GET /refresh?key=nexus-admin-2024&debug=1` | Debug: tests single EURC API call, returns raw response |
+| `GET /refresh?key=nexus-admin-2024&debug=1` | Tests a single EURC API call and returns raw response |
 
 ### Environment Variables
 
-These must be set in the Cloudflare Workers dashboard under **Settings → Variables**:
+Set in Cloudflare Workers dashboard under **Settings → Variables**:
 
-| Variable | Value | Notes |
-|----------|-------|-------|
-| `TT_API_KEY` | Token Terminal API key | Falls back to hardcoded key if missing |
-| `ADMIN_KEY` | `nexus-admin-2024` | Protects the `/refresh` endpoint |
+| Variable | Notes |
+|----------|-------|
+| `TT_API_KEY` | Token Terminal API key |
+| `ADMIN_KEY` | Protects the `/refresh` endpoint (`nexus-admin-2024`) |
+
+> ⚠️ Always deploy with `--keep-vars` to preserve these. Without it Cloudflare wipes env vars on each deploy.
 
 ### KV Namespace
 
 | Setting | Value |
 |---------|-------|
 | Binding name | `NEXUS_DATA` |
-| Namespace ID | `13f07bc0afbc4044b54d02d3804b9597` |
 | Key | `nexus:data:v2` |
 | Expiry | 7 days |
 | Stale threshold | 22 hours (triggers background refresh) |
@@ -67,9 +71,77 @@ These must be set in the Cloudflare Workers dashboard under **Settings → Varia
 
 Runs daily at **06:00 UTC** (`0 6 * * *`).
 
+### Metrics Fetched (Token Terminal)
+
+| Metric ID | Description |
+|-----------|-------------|
+| `asset_market_cap_circulating` | Circulating market cap |
+| `asset_transfer_volume` | 30d transfer volume |
+| `asset_transfer_count` | 30d transfer count |
+| `asset_dau` | Daily active unique senders (30d series) |
+| `asset_holders` | Total holders |
+| `asset_mints` | Mint events |
+| `asset_redemptions` | Redemption events |
+| `asset_price` | USD price |
+
+### Output JSON Schema
+
+Top-level structure:
+
+```json
+{
+  "updated_at": "2026-03-23T13:14:27.615Z",
+  "fx_rates": { "EUR": 1.155, "GBP": 1.337, ... },
+  "sector": { "total_mc": 2340000000, "total_vol30": 45000000000, ... },
+  "top_gainer": { "id": "gbpm", "mc30pct": 12.4 },
+  "top_loser":  { "id": "eurt", "mc30pct": -8.1 },
+  "assets": [ ...per-asset objects... ],
+  "currencies": { "EUR": { "mc": 1800000000, ... }, ... },
+  "dau_series": { "eurc": [3419, 3176, 4455, ...], "eurs": [...], ... },
+  "txn_series": { "eurc": [68000, 72000, 74000, ...], "eurs": [...], ... }
+}
+```
+
+Per-asset object:
+
+```json
+{
+  "id": "eurc",
+  "name": "EURC",
+  "cur": "EUR",
+  "iss": "Circle",
+  "chains": ["ethereum", "solana", "base", "avalanche", "stellar"],
+  "mc": 484692643,
+  "mc30pct": -1.9,
+  "mc90pct": 30.1,
+  "mc180pct": 64.2,
+  "vol30": 6772597342,
+  "txn30": 2208051,
+  "dau": 4687,
+  "holders": 200361,
+  "mints30": 0,
+  "redems30": 0,
+  "netFlow30": 0,
+  "price": 1.082,
+  "pegDevBps": 5,
+  "velocityRatio": 13.97,
+  "mc_series": [372635706, ..., 484692644],
+  "price_series": [1.081, ..., 1.082]
+}
+```
+
+> **Note on `dau_series` / `txn_series`:** As of Worker v5 these are stored as **top-level maps** (`{ assetId → [values] }`) rather than per-asset fields. This avoids a Cloudflare Workers V8 runtime issue where dynamically assigned properties on objects were silently dropped during JSON serialisation.
+
+### FX Rates
+
+Fetched from **frankfurter.app** (European Central Bank data, free, no key required).
+URL: `https://api.frankfurter.app/latest?from=USD&to=EUR,GBP,...`
+Used to calculate peg deviation in basis points: `(price_usd / fx_rate - 1) × 10000`.
+Hardcoded fallback rates are included in the Worker.
+
 ### Asset Registry
 
-40 unique stablecoins tracked across 19 currencies:
+40 stablecoins across 19 currencies:
 
 | Currency | Assets |
 |----------|--------|
@@ -93,147 +165,116 @@ Runs daily at **06:00 UTC** (`0 6 * * *`).
 | MYR | MYRC |
 | GHS | cGHS |
 
-### Metrics Fetched (Token Terminal)
-
-| Metric ID | Description |
-|-----------|-------------|
-| `asset_market_cap_circulating` | Circulating market cap |
-| `asset_transfer_volume` | Transfer volume |
-| `asset_transfer_count` | Number of transfers |
-| `asset_dau` | Daily active unique senders |
-| `asset_holders` | Total holders |
-| `asset_mints` | Mint events |
-| `asset_redemptions` | Redemption events |
-| `asset_price` | USD price |
-
-### Output JSON Schema (per asset)
-
-```json
-{
-  "id": "eurc",
-  "name": "EURC",
-  "cur": "EUR",
-  "iss": "Circle",
-  "chains": ["ethereum", "solana", "base", "avalanche", "stellar"],
-  "mc": 484692643,
-  "mc30pct": -1.9,
-  "mc90pct": 30.1,
-  "mc180pct": 64.2,
-  "vol30": 6772597342,
-  "txn30": 2208051,
-  "dau": 4687,
-  "holders": 200361,
-  "mints30": 0,
-  "redems30": 0,
-  "netFlow30": 0,
-  "price": 1.082,
-  "pegDevBps": 5,
-  "velocityRatio": 13.97,
-  "mc_series": [372635706, "...", 484692644],
-  "dau_series": [4500, 4612, "...", 4687],
-  "txn_series": [72000, 68000, "...", 74000],
-  "price_series": [1.081, "...", 1.082]
-}
-```
-
-### FX Rates
-
-Fetched from **frankfurter.app** (European Central Bank data, free, no API key required).
-URL: `https://api.frankfurter.app/latest?from=USD&to=EUR,GBP,SGD,...`
-Used to calculate peg deviation in basis points: `(price_usd / fx_rate - 1) × 10000`
-
-Hardcoded fallback rates are included in the Worker in case the FX API is unavailable.
-
 ---
 
 ## Dashboard (`nonusd.pages.dev`)
 
-**Source:** `index.html` (single file, ~2,800 lines)
-**Deployed via:** Cloudflare Pages (upload zip)
-**Version history:** v12 → v13 (header redesign) → v14 (chart data fixes)
+**Source:** `index.html` (single file)
+**Deployed via:** Cloudflare Pages
+**Current version:** v15
 
-### Dashboard Tabs
+### Tabs
 
 | Tab | Contents |
 |-----|----------|
 | **Overview** | KPI cards (Total MC, 30d Vol, Daily Senders, Active Chains, Holders, Top Gainer/Loser), sector bar chart, continent chart |
 | **Currencies** | Per-currency panels with asset cards, MC/Senders/Txns sparklines, peg deviation, velocity ratio |
-| **Chains** | Chain-level breakdown with MC and asset distribution |
-| **Activity** | Cross-asset activity ranking (DAU, Txns, Velocity) |
-| **Insights** | AI-generated commentary on notable trends |
+| **Chains** | Chain-level MC breakdown and asset distribution |
+| **Activity** | Cross-asset ranking by DAU, Txns, and Velocity |
+| **Insights** | AI-built commentary on notable trends |
 
-### Data Loading Logic
-
-The dashboard tries the live Worker first, then falls back to embedded static data:
+### Data Loading
 
 ```
-1. Fetch https://nonusd-data.0xtakeprofits.workers.dev/data
-   ↓ success → processWorkerData(wd)
-   ↓ error → use embedded FALLBACK static snapshot
+1. Check localStorage (key: nsi_live_v2, TTL: 12h)
+   → Hit & fresh: hydrate from cache, render immediately
+   → Miss or stale: continue ↓
+
+2. Fetch Worker /data endpoint (12s timeout)
+   → processWorkerData(wd) → cache to localStorage → render
+   → Error: continue ↓
+
+3. Fallback: fetch Token Terminal API directly
+   → processAllData() → render
 ```
 
-`processWorkerData()` maps the Worker JSON into the dashboard's internal data structures:
-- `ASSETS[]` — flat array of asset objects
-- `MC_SERIES{}` — sampled 180d market cap series per asset (≤18 points for rendering)
-- `DAU_SERIES{}` — 30d daily senders series (if Token Terminal returns history)
-- `TXN_SERIES{}` — 30d daily transaction count series (if Token Terminal returns history)
-- `ACTIVITY{}` — `{dau, txn}` snapshots for current-value display
-- `CHAIN_DATA{}` — per-chain MC aggregates
-- `CONT_SERIES{}` — continent-level timeseries (Europe / Asia-Pacific / Americas / Africa)
+### `processWorkerData()` — Data Mapping
 
-### Sparkline Charts (Currency Tab)
+Maps Worker JSON into dashboard-internal structures:
 
-Each asset card in the Currency tab has three sparkline modes toggled by buttons:
+| Variable | Source |
+|----------|--------|
+| `ASSETS[]` | `wd.assets` mapped to display objects |
+| `MC_SERIES{}` | Per-asset 180d market cap, sampled to ≤18 points |
+| `DAUSERIES{}` | `wd.dau_series` (top-level map, v5+) |
+| `TXN_SERIES{}` | `wd.txn_series` (top-level map, v5+) |
+| `ACTIVITY{}` | `{dau, txn}` snapshots for current-value display |
+| `CHAIM_DATA;}` | Per-chain MC aggregates |
+| `CONT_SERIES{}` | Continent-level MC timeseries (Europe / Asia-Pacific / Americas / Africa) |
 
-| Mode | Series Source | Fallback if ≤1 point |
-|------|--------------|----------------------|
-| **MKT CAP** | `MC_SERIES[id]` | Always has data |
-| **SENDERS** | `DAU_SERIES[id]` | Shows current value + "Not enough data to compute a chart" |
-| **TXNS** | `TXN_SERIES[id]` | Shows current value + "Not enough data to compute a chart" |
+### Sparklines (Currency Tab)
 
-**Why SENDERS and TXNS may show "Not enough data":** Token Terminal may return only a single data point (snapshot) for `asset_dau` and `asset_transfer_count` for some assets rather than a full daily series. Market cap always has a full 180-day history.
+Each asset card has three sparkline modes:
+
+| Mode | Data source | Fallback if ≤1 point |
+|------|-------------|----------------------|
+| **MKT CAP** | `MC_SERIES[id]` | Always has data (180d) |
+| **SENDERS** | `DAUSERIES{id]}` | "Not enough data to compute a chart" |
+| **TXNS** | `TXN_SERIES[id]` | "Not enough data to compute a chart" |
 
 ---
 
-## Deployment Guide
+## Deployment
 
 ### Deploy the Worker
 
-1. Make any changes to `nonusd-data-worker.js`
-2. Run the deploy script on your Mac terminal:
-   ```bash
-   bash ~/Downloads/PASTE-THIS-INTO-TERMINAL.txt
-   ```
-3. Verify:
-   ```bash
-   curl "https://nonusd-data.0xtakeprofits.workers.dev/refresh?key=nexus-admin-2024"
-   # Expected: {"ok":true,"assets":40,"ts":"..."}
-   ```
+Run the self-contained deploy script (includes the full Worker source base64-encoded):
 
-**Important:** Always use `--keep-vars` flag (already in the script) to preserve `TT_API_KEY` and `ADMIN_KEY` environment variables. Without it, Cloudflare wipes env vars on each deploy.
+```bash
+bash ~/Downloads/PASTE-THIS-INTO-TERMINAL.txt
+```
+
+The script will:
+- Decode and verify the Worker source
+- Run `npx wranglor@latest deploy --keep-vars`
+- Auto-trigger `/refresh` and print a Python verification summary
+
+After deploying, trigger an immediate cache refresh:
+
+```bash
+curl "https://nonusd-data.0xtakeprofits.workers.dev/refresh?key=nexus-admin-2024"
+# → {"ok":true,"assets":40,"ts":"..."}
+```
 
 ### Deploy the Dashboard
 
-1. Go to **Cloudflare Pages** → `nonusd` project → **Deployments**
-2. Click **Upload assets**
-3. Upload `nonusd-cloudflare-v14.zip` (or latest version)
-4. Deployment is instant
+Run the self-contained Pages deploy script:
 
-### After Deploying the Worker
-
-The KV cache will still hold the old data. To refresh immediately:
 ```bash
-curl "https://nonusd-data.0xtakeprofits.workers.dev/refresh?key=nexus-admin-2024"
+bash ~/Downloads/DEPLOY-DASHBOARD-v15.sh
 ```
 
-The cron job runs daily at 06:00 UTC automatically.
+Or manually via Cloudflare Pages UI:
+
+1. Go to **Cloudflare Pages → nonusd → Deployments**
+2. Click **Upload assets** and upload `nonusd-cloudflare-v15.zip`
+3. **Important:** ensure it deploys to the **Production** environment (not Preview)
+
+### After Dashboard Deploy — Clear Client Cache
+
+If you (or users) see stale data after a deploy, clear localStorage in the browser console:
+
+```js
+localStorage.removeItem('nsi_live_v2');
+location.reload(true);
+```
 
 ---
 
-## Cloudflare Account Details
+## Cloudflare Account
 
-| Setting | Value |
-|---------|-------|
+| Resource | Value |
+|----------|-------|
 | Account ID | `e438a5fc1e04c5ad62f0ee974c8d6627` |
 | Worker name | `nonusd-data` |
 | Pages project | `nonusd` |
@@ -241,36 +282,12 @@ The cron job runs daily at 06:00 UTC automatically.
 
 ---
 
-## Known Issues & Data Quality
+## Known Issues
 
-### Assets with Partial Data
-
-Some smaller assets may have limited Token Terminal coverage:
-- **AUDX** (`dau: 0`) — DAU metric not tracked by TT for this asset
-- **GBPM** — Very small MC, volatile series
-- Assets with `mc < $100K` are filtered out of gainer/loser calculations
-
-### Duplicate Asset IDs in Registry
-
-The `ASSETS` array in the Worker has two duplicate entries each for `eur0p` and `eurq`. These are deduplicated by the `seen = new Set()` logic in `fetchAndProcess()`, so only the first occurrence is processed. This should be cleaned up in a future version.
-
-### Token Terminal Rate Limits
-
-The Worker makes 40 parallel API requests on each refresh. Token Terminal's free tier may throttle requests. If `assets < 40` on a refresh, some requests likely 429'd. The Worker logs individual asset errors to Cloudflare's Workers console.
-
----
-
-## File Structure
-
-```
-cf-deploy/
-  nonusd-data-worker.js    ← Worker source (current deployed version)
-  wrangler.toml            ← Wrangler configuration
-
-outputs/
-  nonusd-cloudflare-v14.zip  ← Latest dashboard build (deploy to Pages)
-  PASTE-THIS-INTO-TERMINAL.txt  ← Self-contained Worker deploy script
-```
+- **Some assets show "Not enough data" on SENDERS/TXNS sparklines.** Token Terminal returns only a single snapshot (not a time series) for `asset_dau` / `asset_transfer_count` on smaller or less-tracked assets. Nothing to fix — the fallback message is intentional.
+- **AUDX `dau: 0`**— DAU not tracked by Token Terminal for this asset.
+- **Duplicate asset IDs** (`eur0p`, `eurq`) in the Worker's asset registry are deduplicated by a `seen = new Set()` guard. Should be cleaned up in a future version.
+- **Token Terminal rate limits** — The Worker makes 40 parallel requests per refresh. On the free tier, some may 429. Check Worker logs if `assets < 40` on a refresh.
 
 ---
 
@@ -279,47 +296,39 @@ outputs/
 **Base URL:** `https://api.tokenterminal.com/v2`
 **Auth:** `Authorization: Bearer {api_key}`
 
-### Endpoint Used
+### Endpoint
 
 ```
-GET /v2/assets/{assetId}/metrics?metric_ids[]=metric1&metric_ids[]=metric2&interval=180d
+GET /v2/assets/{assetId}/metrics?metric_ids[]=metric1&interval=180d
 ```
 
-**Response format:**
-```json
-{
-  "data": [
-    {
-      "timestamp": "2026-03-20",
-      "asset_id": "eurc",
-      "product_id": "eurc",
-      "asset_market_cap_circulating": 484692644,
-      "asset_dau": 4687
-    }
-  ]
-}
-```
+Each row in `data[]` represents one day; all requested metrics appear as fields on the same row.
 
-Each row in `data` represents one day. All requested metrics appear as fields on the same row.
+### Endpoints That Do NOT Work
 
-### Endpoints That Do NOT Work (historical reference)
-
-- `GET /v2/metrics` — Returns metrics catalog (definitions), not data
+- `GET /v2/metrics` — Returns metric definitions, not data
 - `GET /v2/assets/metrics?asset_ids[]=eurc` — Returns 404; asset ID must be in the URL path
-- CSV format (`Accept: text/csv`) — TT returns JSON regardless; ignore `Accept` header
+- `Accept: text/csv` header — TT ignores it and always returns JSON
 
 ---
 
 ## Changelog
 
+### Dashboard
+
 | Version | Date | Changes |
 |---------|------|---------|
-| v12 | Mar 2026 | Base release, deployed to nonusd.pages.dev |
-| v13 | Mar 2026 | Header redesign: larger title, removed redundant stats box, moved data freshness to footer, added KPI cards for Holders/Gainer/Loser |
-| v14 | Mar 2026 | Fixed Currency tab sparklines: populate DAU_SERIES/TXN_SERIES from Worker data; replaced "snapshot · no history" with "Not enough data to compute" message; Worker now outputs `dau_series` and `txn_series` arrays per asset |
+| v12 | Mar 2026 | Initial release on nonusd.pages.dev |
+| v13 | Mar 2026 | Header redesign; KPI cards for Holders, Top Gainer/Loser; freshness moved to footer |
+| v14 | Mar 2026 | Fixed Currency tab sparklines; DAU_SERIES/TXN_SERIES populated from Worker data |
+| v15 | Mar 2026 | Updated `processWorkerData()` to read top-level `dau_series`/`txn_series` maps from Worker v5; added localStorage cache (12h TTL) |
 
-| Worker Version | Date | Changes |
-|----------------|------|---------|
-| v1 | Mar 2026 | Initial deployment, CSV parsing, wrong endpoint |
-| v2 | Mar 2026 | Fixed endpoint: `/v2/assets/{id}/metrics`, switched to JSON parsing |
-| v3 | Mar 2026 | Added `dau_series` and `txn_series` to asset output |
+### Worker
+
+| Version | Date | Changes |
+|---------|------|---------|
+| v1 | Mar 2026 | Initial deployment; CSV parsing, wrong API endpoint |
+| v2 | Mar 2026 | Fixed endpoint to `/v2/assets/{id}/metrics`; switched to JSON parsing |
+| v3 | Mar 2026 | Added `dau_series`/`txn_series` fields per asset (inline in object literal) |
+| v4 | Mar 2026 | Moved series to post-creation assignment (`assetRecord.dau_series = dauArr`) — still not serialised correctly by V8 runtime |
+| v5 | Mar 2026 | Fixed: `dau_series`/`txn_series` stored as top-level maps (`dauSeriesMap`, `txnSeriesMap`) outside the asset loop; confirmed 30-point arrays for all 40 assets |
