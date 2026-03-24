@@ -101,6 +101,31 @@ tr:hover td{background:#f0f9ff}
 .pie-legend{margin-top:8px;display:flex;flex-direction:column;gap:4px}
 .pie-legend-row{display:flex;align-items:center;justify-content:space-between;font-size:12px}
 
+/* TRADING PAIRS */
+.tp-toggle{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:6px;border:1px solid #e2e8f0;background:#f8fafc;cursor:pointer;font-size:11px;font-weight:600;color:#475569;transition:all .15s;margin-top:10px}
+.tp-toggle:hover{border-color:#2563eb;color:#2563eb;background:#eff6ff}
+.tp-toggle.open{border-color:#2563eb;color:#2563eb;background:#eff6ff}
+.tp-toggle .tp-arrow{transition:transform .2s;font-size:9px}
+.tp-toggle.open .tp-arrow{transform:rotate(90deg)}
+.tp-section{margin-top:8px;border-top:1px solid #f1f5f9;padding-top:10px;display:none}
+.tp-section.open{display:block}
+.tp-loading{display:flex;align-items:center;gap:8px;padding:12px;color:#64748b;font-size:12px}
+.tp-loading .tp-spinner{width:14px;height:14px;border:2px solid #e2e8f0;border-top-color:#2563eb;border-radius:50%;animation:tpspin .6s linear infinite}
+@keyframes tpspin{to{transform:rotate(360deg)}}
+.tp-error{padding:10px 12px;font-size:12px;color:#94a3b8;background:#fafafa;border-radius:6px;text-align:center}
+.tp-table{width:100%;border-collapse:collapse;font-size:11px;margin-top:4px}
+.tp-table th{padding:5px 8px;text-align:left;font-size:9px;color:#94a3b8;font-weight:700;text-transform:uppercase;letter-spacing:.05em;background:#f8fafc;white-space:nowrap;border-bottom:1px solid #e2e8f0}
+.tp-table td{padding:5px 8px;white-space:nowrap;border-bottom:1px solid #f1f5f9}
+.tp-table tr:hover td{background:#f0f9ff}
+.tp-trust{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:3px;vertical-align:middle}
+.tp-trust.green{background:#10b981}.tp-trust.yellow{background:#f59e0b}.tp-trust.red{background:#ef4444}.tp-trust.gray{background:#cbd5e1}
+.tp-exchange{font-weight:600;color:#0f172a}
+.tp-pair{font-family:'SF Mono',Monaco,Consolas,monospace;font-size:10px;color:#475569;background:#f1f5f9;padding:2px 5px;border-radius:3px}
+.tp-link{color:#2563eb;text-decoration:none;font-size:10px}
+.tp-link:hover{text-decoration:underline}
+.tp-no-data{color:#94a3b8;font-size:11px;padding:8px 0}
+.tp-count{font-size:10px;color:#94a3b8;font-weight:400;margin-left:6px}
+
 /* CHART WINDOW TOGGLES */
 .chart-toggle-row{display:flex;gap:3px}
 .ctgl{padding:3px 9px;border-radius:12px;border:1.5px solid #e2e8f0;background:#fff;font-size:10px;font-weight:700;color:#64748b;cursor:pointer;transition:all .12s;letter-spacing:.02em}
@@ -196,6 +221,35 @@ tr:hover td{background:#f0f9ff}
 .cont-chg{font-size:11px;font-weight:600}
 .cont-assets{font-size:10px;color:#94a3b8;margin-top:4px}
 @media(max-width:700px){#cont-row{grid-template-columns:1fr}}
+
+/* MARKET CONTEXT (Features 1+2) */
+#market-context{margin-bottom:16px}
+#fx-context{margin-bottom:16px}
+
+/* MC Comparison Bars */
+.ctx-bar-group{margin-bottom:14px}
+.ctx-bar-label{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:5px}
+.ctx-bar-name{font-size:12px;font-weight:700;color:#334155}
+.ctx-bar-val{font-size:13px;font-weight:800;color:#0f172a}
+.ctx-bar-track{height:28px;background:#f1f5f9;border-radius:6px;overflow:hidden;position:relative}
+.ctx-bar-fill{height:100%;border-radius:6px;display:flex;align-items:center;padding-left:8px;font-size:10px;font-weight:700;color:#fff;min-width:2px;transition:width .6s ease}
+.ctx-bar-pct{position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:10px;font-weight:700;color:#64748b}
+.ctx-mc-stat{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px;padding-top:10px;border-top:1px solid #f1f5f9}
+.ctx-mc-stat .cms{font-size:11px;color:#64748b}
+.ctx-mc-stat .cms b{color:#0f172a}
+
+/* FX Scale Visualization */
+.fx-scale-row{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.fx-bubble{border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .4s;position:relative}
+.fx-bubble-inner{text-align:center;line-height:1.3}
+.fx-bubble .fb-val{font-weight:800;color:#fff}
+.fx-bubble .fb-lbl{font-size:9px;color:rgba(255,255,255,.85);font-weight:600}
+.fx-info{flex:1}
+.fx-info .fx-name{font-size:13px;font-weight:800;color:#0f172a}
+.fx-info .fx-desc{font-size:11px;color:#64748b;line-height:1.5}
+.fx-info .fx-val{font-size:15px;font-weight:800;color:#0f172a;margin-top:2px}
+.fx-divider{height:1px;background:linear-gradient(90deg,transparent,#e2e8f0,transparent);margin:4px 0}
+#ctx-fx-insight{margin-top:10px;padding:9px 12px;background:#eff6ff;border-radius:8px;border-left:3px solid #2563eb;font-size:11.5px;color:#334155;line-height:1.65}
 
 /* FOOTER */
 footer{text-align:center;padding:12px;font-size:11px;color:#94a3b8;border-top:1px solid #f1f5f9;margin-top:12px}
@@ -457,6 +511,24 @@ function grantAccess(method) {
       <h3>Top 15 Non-USD Stablecoins by Market Cap</h3>
       <table id="top15-table"></table>
     </div>
+
+    <!-- ── FEATURE 1: STABLECOIN MARKET CONTEXT (full width) ──────────── -->
+    <div id="market-context" style="display:none">
+      <div class="chart-box" id="ctx-mc-box">
+        <h3>Stablecoin Market Context</h3>
+        <div id="ctx-mc-bars"></div>
+        <div id="ctx-mc-legend"></div>
+      </div>
+    </div>
+
+    <!-- ── FEATURE 2: THE OPPORTUNITY GAP (full width, bottom) ────────── -->
+    <div id="fx-context" style="display:none">
+      <div class="chart-box" id="ctx-fx-box">
+        <h3>The Opportunity Gap <span style="font-weight:400;color:#94a3b8;font-size:9px;text-transform:none;letter-spacing:0">log scale</span></h3>
+        <div id="ctx-fx-scale"></div>
+        <div id="ctx-fx-insight"></div>
+      </div>
+    </div>
   </div>
 
   <!-- BY CURRENCY -->
@@ -701,6 +773,165 @@ const CONFIG = {
   // Live data Worker — pre-processes TT + FX data, returns ready-to-use JSON
   WORKER_URL:   'https://nonusd-data.0xtakeprofits.workers.dev/data',
 };
+
+// ── COINGECKO TRADING PAIRS ──────────────────────────────────────────────────
+// Maps dashboard asset IDs → CoinGecko IDs (null = not listed on CoinGecko)
+const CG_ID_MAP = {
+  // EUR — verified against CoinGecko API 2026-03
+  'eurc':'euro-coin','eure':'monerium-eur-money','eurs':'stasis-eurs','eura':null,
+  'eurm':null,'eurr':'stablr-euro','eurq':'quantoz-eurq','eur0':null,'eur0p':null,
+  'eurcv':'societe-generale-forge-eurcv','veur':'vnx-euro','eurt':'euro-tether','eurau':'allunity-eur',
+  // GBP
+  'gbpm':null,'gbpe':'monerium-gbp-emoney','vgbp':'vnx-british-pound',
+  // CHF
+  'vchf':'vnx-swiss-franc','chfm':null,
+  // JPY
+  'jpyc':'jpy-coin','jpym':null,'gyen':'gyen',
+  // AUD
+  'audm':null,'audd':'novatti-australian-digital-dollar','audx':'aussie-dollar-token',
+  // Other Asia
+  'myrc':'blox-myrc','phpm':null,'xsgd':'xsgd',
+  // Americas
+  'cadm':null,'mxnb':'mxnb','wmxn':null,'copm':null,'wcop':null,
+  'brlm':null,'wars':null,'wclp':null,'wpen':null,
+  // Africa
+  'kesm':null,'ngnm':null,'cghs':null,'zarm':null
+};
+
+// In-memory ticker cache: { cgId: { data: [...], ts: Date.now() } }
+const _tickerCache = {};
+const TICKER_CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+
+async function fetchTickers(assetId) {
+  const cgId = CG_ID_MAP[assetId];
+  if (!cgId) return { ok: false, reason: 'not_listed' };
+
+  // Check cache
+  const cached = _tickerCache[cgId];
+  if (cached && (Date.now() - cached.ts) < TICKER_CACHE_TTL) {
+    return { ok: true, tickers: cached.data };
+  }
+
+  try {
+    const url = `https://api.coingecko.com/api/v3/coins/${cgId}/tickers?include_exchange_logo=true&depth=true`;
+    const resp = await fetch(url, { signal: AbortSignal.timeout(10000) });
+    if (resp.status === 429) return { ok: false, reason: 'rate_limited' };
+    if (!resp.ok) return { ok: false, reason: 'api_error', status: resp.status };
+    const json = await resp.json();
+    const tickers = (json.tickers || [])
+      .filter(t => !t.is_stale && !t.is_anomaly)
+      .sort((a, b) => (b.converted_volume?.usd || 0) - (a.converted_volume?.usd || 0));
+    _tickerCache[cgId] = { data: tickers, ts: Date.now() };
+    return { ok: true, tickers };
+  } catch (e) {
+    if (e.name === 'AbortError' || e.name === 'TimeoutError') return { ok: false, reason: 'timeout' };
+    return { ok: false, reason: 'network_error' };
+  }
+}
+
+function renderTickerTable(result) {
+  if (!result.ok) {
+    const msgs = {
+      'not_listed': 'This asset is not listed on CoinGecko — no trading pair data available.',
+      'rate_limited': 'Rate limited by CoinGecko. Please try again in a moment.',
+      'timeout': 'Request timed out. Please try again.',
+      'network_error': 'Network error. Check your connection and try again.',
+      'api_error': 'CoinGecko API error. Please try again later.'
+    };
+    return `<div class="tp-error">${msgs[result.reason] || msgs.api_error}</div>`;
+  }
+  const tickers = result.tickers;
+  if (!tickers.length) return `<div class="tp-error">No active trading pairs found.</div>`;
+
+  // Helper: turn a CoinGecko raw base/target + coin_id into a clean ticker
+  const _cgSymbols = {'euro-coin':'EURC','usd-coin':'USDC','tether':'USDT','dai':'DAI','bitcoin':'BTC',
+    'ethereum':'ETH','weth':'WETH','wrapped-ether':'WETH','wrapped-ethereum':'WETH',
+    'stasis-eurs':'EURS','monerium-eur-money':'EURe',
+    'vnx-euro':'VEUR','vnx-swiss-franc':'VCHF','vnx-british-pound':'VGBP','euro-tether':'EURT',
+    'quantoz-eurq':'EURQ','stablr-euro':'EURR','societe-generale-forge-eurcv':'EURCV',
+    'allunity-eur':'EURAU','eura':'EURA',
+    'jpy-coin':'JPYC','gyen':'GYEN','xsgd':'XSGD','mxnb':'MXNB',
+    'novatti-australian-digital-dollar':'AUDD','aussie-dollar-token':'AUDX','blox-myrc':'MYRC',
+    'monerium-gbp-emoney':'GBPE','wrapped-bitcoin':'WBTC',
+    'binance-usd':'BUSD','true-usd':'TUSD','frax':'FRAX','usds':'USDS',
+    'binancecoin':'BNB','matic-network':'MATIC','solana':'SOL',
+    'chainlink':'LINK','aave':'AAVE','maker':'MKR','compound-governance-token':'COMP',
+    'uniswap':'UNI','sushi':'SUSHI','curve-dao-token':'CRV','lido-dao':'LDO',
+    'staked-ether':'stETH','coinbase-wrapped-staked-eth':'cbETH',
+    'rocket-pool-eth':'rETH','first-digital-usd':'FDUSD','ethena-usde':'USDe',
+    'bridged-usdc-polygon-pos-bridge':'USDC.e','usd-coin-ethereum-bridged':'USDC.e'};
+  function cleanSymbol(raw, coinId) {
+    // If raw is short and not a hex address, use as-is (CEX pairs like "EURC", "USDT")
+    if (raw && raw.length <= 12 && !/^0[xX]/.test(raw)) return raw;
+    // Resolve from coin_id
+    if (coinId && _cgSymbols[coinId]) return _cgSymbols[coinId];
+    // Fallback for unknown coin_id: capitalize last slug segment
+    if (coinId) return coinId.split('-').pop().toUpperCase().slice(0, 8);
+    // Truncate long hex addresses
+    if (raw && raw.length > 12) return raw.slice(0, 6) + '…' + raw.slice(-4);
+    return raw || '?';
+  }
+
+  const rows = tickers.slice(0, 20).map(t => {
+    const exName = t.market?.name || '—';
+    const baseLabel = cleanSymbol(t.base, t.coin_id);
+    const targetLabel = cleanSymbol(t.target, t.target_coin_id);
+    const pair = `${baseLabel}/${targetLabel}`;
+    const price = t.converted_last?.usd ? '$' + Number(t.converted_last.usd).toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:6}) : '—';
+    const vol = t.converted_volume?.usd ? '$' + fmtM(t.converted_volume.usd) : '—';
+    const spread = t.bid_ask_spread_percentage != null ? t.bid_ask_spread_percentage.toFixed(2) + '%' : '—';
+    const trust = t.trust_score || 'none';
+    const trustCls = trust === 'green' ? 'green' : trust === 'yellow' ? 'yellow' : trust === 'red' ? 'red' : 'gray';
+    const link = t.trade_url ? `<a href="${t.trade_url}" target="_blank" rel="noopener" class="tp-link" title="Trade on ${exName}">↗</a>` : '';
+    // Depth info
+    const depthUp = t.cost_to_move_up_usd ? '$' + fmtM(t.cost_to_move_up_usd) : '—';
+    const depthDn = t.cost_to_move_down_usd ? '$' + fmtM(t.cost_to_move_down_usd) : '—';
+    return `<tr>
+      <td><span class="tp-trust ${trustCls}"></span><span class="tp-exchange">${exName}</span></td>
+      <td><span class="tp-pair">${pair}</span></td>
+      <td>${price}</td>
+      <td style="text-align:right">${vol}</td>
+      <td style="text-align:right">${spread}</td>
+      <td style="text-align:center;font-size:10px;color:#64748b" title="+2% depth: ${depthUp} / -2% depth: ${depthDn}">↑${depthUp} ↓${depthDn}</td>
+      <td style="text-align:center">${link}</td>
+    </tr>`;
+  }).join('');
+
+  const extra = tickers.length > 20 ? `<div style="padding:6px 8px;font-size:10px;color:#94a3b8;text-align:center">Showing top 20 of ${tickers.length} pairs</div>` : '';
+
+  return `<table class="tp-table">
+    <thead><tr>
+      <th>Exchange</th><th>Pair</th><th>Price</th>
+      <th style="text-align:right">24h Vol</th>
+      <th style="text-align:right">Spread</th>
+      <th style="text-align:center">±2% Depth</th>
+      <th style="text-align:center"></th>
+    </tr></thead>
+    <tbody>${rows}</tbody>
+  </table>${extra}`;
+}
+
+async function toggleTradingPairs(assetId, btn) {
+  const section = document.getElementById('tp-' + assetId);
+  if (!section) return;
+  const isOpen = section.classList.contains('open');
+  if (isOpen) {
+    section.classList.remove('open');
+    btn.classList.remove('open');
+    return;
+  }
+  btn.classList.add('open');
+  section.classList.add('open');
+  // Already loaded?
+  if (section.dataset.loaded === '1') return;
+  section.innerHTML = `<div class="tp-loading"><div class="tp-spinner"></div>Loading trading pairs from CoinGecko...</div>`;
+  const result = await fetchTickers(assetId);
+  section.innerHTML = renderTickerTable(result);
+  if (result.ok) section.dataset.loaded = '1';
+}
+
+// Expose globally
+window.toggleTradingPairs = toggleTradingPairs;
 
 // ── FETCH HELPERS ─────────────────────────────────────────────────────────────
 /**
@@ -1405,6 +1636,166 @@ const loser    = [...withChg].sort((a,b)=>a.mc30-b.mc30)[0];
 const fcEl = document.getElementById("footer-counts");
 if (fcEl) fcEl.textContent = `${ASSETS.length} non-USD stablecoin assets · ${tots.length} fiat currencies`;
 
+// ── FEATURE 1+2: MARKET CONTEXT ─────────────────────────────────────────────
+{
+  const ctxEl = document.getElementById('market-context');
+  const fxCtxEl = document.getElementById('fx-context');
+  const mcBars = document.getElementById('ctx-mc-bars');
+  const mcLegend = document.getElementById('ctx-mc-legend');
+  const fxScale = document.getElementById('ctx-fx-scale');
+  const fxInsight = document.getElementById('ctx-fx-insight');
+
+  // Feature 2: Static FX reference data (BIS Triennial Survey 2022)
+  const FX_DAILY_VOL = 7.5e12;       // $7.5T/day FX market
+  const FX_USD_SHARE = 0.88;         // USD involved in 88% of FX trades
+
+  // Render Feature 2 immediately with non-USD MC data we already have
+  function renderFxScale(usdMC) {
+    const nonUsdMC = totMC;
+    const totalStableMC = usdMC + nonUsdMC;
+    const nonUsdPct = totalStableMC > 0 ? (nonUsdMC / totalStableMC * 100) : 0;
+    // Traditional non-USD FX share is ~12% of $7.5T daily, annualized notional is enormous
+    // But for fair comparison, use outstanding/MC figures
+    // FX outstanding: BIS OTC derivatives ~$100T notional; for simplicity use daily vol as reference
+
+    const tiers = [
+      { name: 'Daily FX Market', val: FX_DAILY_VOL, color: '#1e293b', desc: 'Global foreign exchange daily turnover (BIS 2022). The world\'s largest financial market.' },
+      { name: 'USD Stablecoins', val: usdMC, color: '#2563eb', desc: `All USD-pegged stablecoins (Token Terminal). Dominates ${(100-nonUsdPct).toFixed(1)}% of all stablecoin market cap.` },
+      { name: 'Non-USD Stablecoins', val: nonUsdMC, color: '#7c3aed', desc: `${ASSETS.length} assets across ${tots.length} currencies. Just ${nonUsdPct.toFixed(2)}% of the stablecoin market.` }
+    ];
+
+    const maxVal = Math.max(...tiers.map(t => t.val));
+
+    fxScale.innerHTML = tiers.map((t, i) => {
+      // Log-scale bubble sizing: min 36px, max 120px
+      const logRatio = Math.log10(t.val) / Math.log10(maxVal);
+      const size = Math.max(36, Math.round(logRatio * 120));
+      const valStr = t.val >= 1e12 ? '$' + (t.val/1e12).toFixed(1) + 'T'
+                   : t.val >= 1e9  ? '$' + (t.val/1e9).toFixed(1) + 'B'
+                   : '$' + (t.val/1e6).toFixed(1) + 'M';
+      return `
+        ${i > 0 ? '<div class="fx-divider"></div>' : ''}
+        <div class="fx-scale-row">
+          <div class="fx-bubble" style="width:${size}px;height:${size}px;background:${t.color}">
+            <div class="fx-bubble-inner">
+              <div class="fb-val" style="font-size:${Math.max(9, size/6)}px">${valStr}</div>
+            </div>
+          </div>
+          <div class="fx-info">
+            <div class="fx-name">${t.name}</div>
+            <div class="fx-desc">${t.desc}</div>
+          </div>
+        </div>`;
+    }).join('');
+
+    // Insight callout
+    const gapMultiple = Math.round(usdMC / nonUsdMC);
+    const fxGap = Math.round(FX_DAILY_VOL / nonUsdMC);
+    fxInsight.innerHTML = `<b>The gap:</b> USD stablecoins are <b>${gapMultiple}x</b> larger than all non-USD stablecoins combined.
+      In traditional FX, non-USD currencies represent ~50% of all trades. In crypto, non-USD stablecoins are just <b>${nonUsdPct.toFixed(2)}%</b> —
+      suggesting a <b>${gapMultiple}x</b> growth opportunity if stablecoins follow the FX market structure.`;
+  }
+
+  // Feature 1: MC comparison bars
+  function renderMcComparison(usdMC) {
+    const nonUsdMC = totMC;
+    const totalMC = usdMC + nonUsdMC;
+    const usdPct = totalMC > 0 ? (usdMC / totalMC * 100) : 0;
+    const nonPct = totalMC > 0 ? (nonUsdMC / totalMC * 100) : 0;
+
+    const bars = [
+      { name: 'USD Stablecoins', val: usdMC, pct: usdPct, color: '#2563eb' },
+      { name: 'Non-USD Stablecoins', val: nonUsdMC, pct: nonPct, color: '#7c3aed' }
+    ];
+
+    mcBars.innerHTML = bars.map(b => {
+      const valStr = b.val >= 1e9 ? '$' + (b.val/1e9).toFixed(1) + 'B' : '$' + (b.val/1e6).toFixed(1) + 'M';
+      const barW = Math.max(1, b.pct);
+      return `
+        <div class="ctx-bar-group">
+          <div class="ctx-bar-label">
+            <span class="ctx-bar-name">${b.name}</span>
+            <span class="ctx-bar-val">${valStr}</span>
+          </div>
+          <div class="ctx-bar-track">
+            <div class="ctx-bar-fill" style="width:${barW}%;background:${b.color}">${b.pct > 8 ? b.pct.toFixed(1)+'%' : ''}</div>
+            ${b.pct <= 8 ? `<div class="ctx-bar-pct" style="left:${barW+1}%;right:auto">${b.pct.toFixed(2)}%</div>` : ''}
+          </div>
+        </div>`;
+    }).join('');
+
+    // Stats row
+    const ratio = usdMC > 0 ? Math.round(usdMC / nonUsdMC) : '—';
+    mcLegend.innerHTML = `<div class="ctx-mc-stat">
+      <div class="cms">Total Stablecoin MC: <b>$${(totalMC/1e9).toFixed(1)}B</b></div>
+      <div class="cms">USD Dominance: <b>${usdPct.toFixed(1)}%</b></div>
+      <div class="cms">Ratio: <b>${ratio}:1</b></div>
+    </div>`;
+  }
+
+  // Fetch total stablecoin MC from Token Terminal (single source of truth)
+  // Then derive USD MC = totalTT − non-USD MC (totMC already computed above)
+  const USD_STABLE_FALLBACK = 300e9; // ~$300B as of Mar 2026 (TT fallback)
+
+  async function fetchUsdStableMC() {
+    try {
+      // Token Terminal: total circulating MC for ALL stablecoins market sector
+      const qs = new URLSearchParams({
+        'metric_ids[]': 'asset_market_cap_circulating',
+        'market_sector_ids[]': 'stablecoins',
+        groupBy: 'none',
+        interval: '7d',
+      });
+
+      // Try proxy first (same-origin Cloudflare Pages Function)
+      let resp;
+      try {
+        resp = await fetch(`/tt-data?${qs.toString()}`, { signal: AbortSignal.timeout(10000) });
+        const ct = resp.headers.get('content-type') || '';
+        if (resp.status === 404 || ct.includes('text/html')) throw new Error('proxy not available');
+      } catch (_) {
+        // Direct fallback
+        resp = await fetch(`${CONFIG.TT_BASE}/internal/metrics?${qs.toString()}`, {
+          headers: { 'Authorization': `Bearer ${CONFIG.TT_KEY}`, 'Accept': 'application/json' },
+          signal: AbortSignal.timeout(10000)
+        });
+      }
+      if (!resp.ok) throw new Error('TT stablecoins ' + resp.status);
+
+      const rows = parseRows(await resp.text());
+      if (!rows.length) throw new Error('TT stablecoins: empty response');
+
+      // Get latest value (rows sorted by timestamp desc or asc — take max)
+      let latestVal = 0;
+      for (const r of rows) {
+        const v = parseFloat(r.value) || 0;
+        if (v > latestVal) latestVal = v;
+      }
+      if (latestVal < 100e9) throw new Error('TT stablecoins: implausible value ' + latestVal);
+
+      // Derive USD MC = total stablecoin MC − non-USD MC (totMC)
+      const usdMC = Math.max(0, latestVal - totMC);
+      console.log(`[NSI] Total stablecoin MC (TT): $${(latestVal/1e9).toFixed(1)}B | USD: $${(usdMC/1e9).toFixed(1)}B | non-USD: $${(totMC/1e9).toFixed(1)}B`);
+      return usdMC;
+    } catch (e) {
+      console.warn('Token Terminal stablecoins fetch failed, using fallback:', e);
+      return USD_STABLE_FALLBACK;
+    }
+  }
+
+  // Render with fallback first, then update with live Token Terminal data
+  renderMcComparison(USD_STABLE_FALLBACK);
+  renderFxScale(USD_STABLE_FALLBACK);
+  ctxEl.style.display = 'block';
+  fxCtxEl.style.display = 'block';
+
+  // Upgrade with live Token Terminal data
+  fetchUsdStableMC().then(usdMC => {
+    renderMcComparison(usdMC);
+    renderFxScale(usdMC);
+  });
+}
+
 // ── TAB SWITCHER ─────────────────────────────────────────────────────────────
 function showTab(id, btn) {
   document.querySelectorAll(".panel").forEach(p=>p.classList.remove("active"));
@@ -1777,6 +2168,10 @@ function renderCurrency(c) {
         <span style="font-size:9px;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;margin-right:2px;line-height:22px">Chains:</span>
         ${a.chains.map(ch=>{const cd=CHAIN_DATA[ch];if(!cd)return '';const imgHtml=cd.logoUrl?`<img src="${cd.logoUrl}" style="width:11px;height:11px;border-radius:50%;vertical-align:middle;margin-right:2px" onerror="this.style.display='none'">`:'';return `<span style="font-size:9px;font-weight:700;padding:2px 6px;border-radius:8px;background:${cd.color}15;color:${cd.color};border:1px solid ${cd.color}30;display:inline-flex;align-items:center">${imgHtml}${cd.name}</span>`;}).join('')}
       </div>`:''}
+      <button class="tp-toggle" id="tpbtn-${a.id}" onclick="toggleTradingPairs('${a.id}',this)">
+        <span class="tp-arrow">▶</span> Trading Pairs${CG_ID_MAP[a.id]?'':'<span class="tp-count">(not on CoinGecko)</span>'}
+      </button>
+      <div class="tp-section" id="tp-${a.id}"></div>
     </div>`;
   });
   cardsHtml += `</div>`;
