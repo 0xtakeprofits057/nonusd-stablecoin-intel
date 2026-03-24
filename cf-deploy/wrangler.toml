@@ -1,0 +1,11 @@
+name = "nonusd-data"
+main = "nonusd-data-worker.js"
+compatibility_date = "2024-01-01"
+account_id = "e438a5fc1e04c5ad62f0ee974c8d6627"
+
+[[kv_namespaces]]
+binding = "NEXUS_DATA"
+id = "13f07bc0afbc4044b54d02d3804b9597"
+
+[triggers]
+crons = ["0 6 * * *"]
