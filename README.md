@@ -171,7 +171,7 @@ Hardcoded fallback rates are included in the Worker.
 
 **Source:** `index.html` (single file)
 **Deployed via:** Cloudflare Pages
-**Current version:** v15
+**Current version:** v18
 
 ### Tabs
 
@@ -182,6 +182,21 @@ Hardcoded fallback rates are included in the Worker.
 | **Chains** | Chain-level MC breakdown and asset distribution |
 | **Activity** | Cross-asset ranking by DAU, Txns, and Velocity |
 | **Insights** | AI-built commentary on notable trends |
+
+### CoinGecko Trading Pairs (Feature 3 — v18)
+
+Each asset card includes an expandable **Trading Pairs** button that lazy-loads live market data from the CoinGecko free API (`/coins/{id}/tickers`).
+
+- **CG_ID_MAP:** Maps 40+ dashboard asset IDs to CoinGecko coin IDs (verified Mar 2026)
+- **In-memory cache:** 5-minute TTL per coin to stay within CoinGecko free-tier rate limits (5-15 calls/min)
+- **cleanSymbol():** Resolves DEX contract addresses to human-readable ticker symbols via a 40+ entry lookup table
+- **Display:** Exchange name, trading pair, USD price, 24h volume, bid/ask spread, ±2% order book depth, direct trade links
+- **Client-side only:** No Worker changes needed; API calls go directly from the browser to CoinGecko
+
+### Market Context (Features 1+2 — v18)
+
+- **Stablecoin Market Context:** USD vs non-USD market cap comparison bars (live data from Token Terminal)
+- **The Opportunity Gap:** Log-scale bubble visualization comparing FX daily turnover ($7.5T BIS 2022), USD stablecoins, and non-USD stablecoins
 
 ### Data Loading
 
@@ -251,13 +266,13 @@ curl "https://nonusd-data.0xtakeprofits.workers.dev/refresh?key=nexus-admin-2024
 Run the self-contained Pages deploy script:
 
 ```bash
-bash ~/Downloads/DEPLOY-DASHBOARD-v15.sh
+bash ~/Downloads/DEPLOY-DASHBOARD-v18.sh
 ```
 
 Or manually via Cloudflare Pages UI:
 
 1. Go to **Cloudflare Pages → nonusd → Deployments**
-2. Click **Upload assets** and upload `nonusd-cloudflare-v15.zip`
+2. Click **Upload assets** and upload `nonusd-cloudflare-v18.zipp`
 3. **Important:** ensure it deploys to the **Production** environment (not Preview)
 
 ### After Dashboard Deploy — Clear Client Cache
@@ -322,6 +337,7 @@ Each row in `data[]` represents one day; all requested metrics appear as fields 
 | v13 | Mar 2026 | Header redesign; KPI cards for Holders, Top Gainer/Loser; freshness moved to footer |
 | v14 | Mar 2026 | Fixed Currency tab sparklines; DAU_SERIES/TXN_SERIES populated from Worker data |
 | v15 | Mar 2026 | Updated `processWorkerData()` to read top-level `dau_series`/`txn_series` maps from Worker v5; added localStorage cache (12h TTL) |
+| v18 | Mar 2026 | Added Trading Pairs feature (CoinGecko integration), Market Context comparison bars, Opportunity Gap visualization |
 
 ### Worker
 
