@@ -171,7 +171,7 @@ Hardcoded fallback rates are included in the Worker.
 
 **Source:** `index.html` (single file)
 **Deployed via:** Cloudflare Pages
-**Current version:** v18
+**Current version:** v20
 
 ### Tabs
 
@@ -182,16 +182,37 @@ Hardcoded fallback rates are included in the Worker.
 | **Chains** | Chain-level MC breakdown and asset distribution |
 | **Activity** | Cross-asset ranking by DAU, Txns, and Velocity |
 | **Insights** | AI-built commentary on notable trends |
+| **DeFi** *(hidden)* | DeFi yield/TVL data via DeFiLlama API — built but hidden for future release |
 
-### CoinGecko Trading Pairs (Feature 3 — v18)
+### CoinGecko Trading Pairs (Feature 3 — v18, hidden in v19+)
 
-Each asset card includes an expandable **Trading Pairs** button that lazy-loads live market data from the CoinGecko free API (`/coins/{id}/tickers`).
+Each asset card includes an expandable **Trading Pairs** button that lazy-loads live market data from the CoinGecko free API (`/coins/{id}/tickers`). Currently hidden via CSS (`display:none`) for future release.
 
 - **CG_ID_MAP:** Maps 40+ dashboard asset IDs to CoinGecko coin IDs (verified Mar 2026)
 - **In-memory cache:** 5-minute TTL per coin to stay within CoinGecko free-tier rate limits (5-15 calls/min)
 - **cleanSymbol():** Resolves DEX contract addresses to human-readable ticker symbols via a 40+ entry lookup table
 - **Display:** Exchange name, trading pair, USD price, 24h volume, bid/ask spread, ±2% order book depth, direct trade links
 - **Client-side only:** No Worker changes needed; API calls go directly from the browser to CoinGecko
+
+### DeFi Integrations (Feature 4 — v19, hidden)
+
+DeFi yield and TVL data via the DeFiLlama `yields.llama.fi/pools` API. Tab is built but hidden via `style=\"display:none\"` for future release.
+
+- **DEFI_SYMBOL_MAP:** Maps 40 dashboard asset symbols to DeFiLlama pool matching
+- **Lazy-loaded:** Data fetched only on first DeFi tab click (18K+ pools)
+- **Features:** Asset-grouped accordion view, table view, KPI cards, column sorting, protocol/chain filters
+- **In-memory cache:** 10-minute TTL
+- **Client-side only:** No Worker changes needed
+
+### Dark Mode (Feature 5 — v19)
+
+System-preference-aware dark mode with manual toggle, inspired by Token Terminal and DeFiLlama color palettes.
+
+- **Toggle:** Sun/moon icon button in header, persisted via `localStorage` key `nsi_theme`
+- **System detection:** `prefers-color-scheme: dark` media query, auto-applies if no stored preference
+- **Implementation:** `[data-theme=\"dark\"]` CSS selector overrides (~120 rules), no CSS variables
+- **Chart.js:** Runtime theme updates on toggle (grid colors, text colors, tooltip styles)
+- **Palette:** `#0e0e11` body, `#15141a` surfaces, `#1e1e26` borders, `#e2e4e9` primary text, `#60a5fa` accent blue
 
 ### Market Context (Features 1+2 — v18)
 
@@ -224,7 +245,7 @@ Maps Worker JSON into dashboard-internal structures:
 | `DAUSERIES{}` | `wd.dau_series` (top-level map, v5+) |
 | `TXN_SERIES{}` | `wd.txn_series` (top-level map, v5+) |
 | `ACTIVITY{}` | `{dau, txn}` snapshots for current-value display |
-| `CHAIM_DATA;}` | Per-chain MC aggregates |
+| `CHAIN_DATA{}` | Per-chain MC aggregates |
 | `CONT_SERIES{}` | Continent-level MC timeseries (Europe / Asia-Pacific / Americas / Africa) |
 
 ### Sparklines (Currency Tab)
@@ -234,8 +255,8 @@ Each asset card has three sparkline modes:
 | Mode | Data source | Fallback if ≤1 point |
 |------|-------------|----------------------|
 | **MKT CAP** | `MC_SERIES[id]` | Always has data (180d) |
-| **SENDERS** | `DAUSERIES{id]}` | "Not enough data to compute a chart" |
-| **TXNS** | `TXN_SERIES[id]` | "Not enough data to compute a chart" |
+| **SENDERS** | `DAUSERIES[id]` | \"Not enough data to compute a chart\" |
+| **TXNS** | `TXN_SERIES[id]` | \"Not enough data to compute a chart\" |
 
 ---
 
@@ -251,14 +272,14 @@ bash ~/Downloads/PASTE-THIS-INTO-TERMINAL.txt
 
 The script will:
 - Decode and verify the Worker source
-- Run `npx wranglor@latest deploy --keep-vars`
+- Run `npx wrangler@latest deploy --keep-vars`
 - Auto-trigger `/refresh` and print a Python verification summary
 
 After deploying, trigger an immediate cache refresh:
 
 ```bash
-curl "https://nonusd-data.0xtakeprofits.workers.dev/refresh?key=nexus-admin-2024"
-# → {"ok":true,"assets":40,"ts":"..."}
+curl \"https://nonusd-data.0xtakeprofits.workers.dev/refresh?key=nexus-admin-2024\"
+# → {\"ok\":true,\"assets\":40,\"ts\":\"...\"}
 ```
 
 ### Deploy the Dashboard
@@ -266,13 +287,13 @@ curl "https://nonusd-data.0xtakeprofits.workers.dev/refresh?key=nexus-admin-2024
 Run the self-contained Pages deploy script:
 
 ```bash
-bash ~/Downloads/DEPLOY-DASHBOARD-v18.sh
+bash ~/Downloads/DEPLOY-DASHBOARD-v20.sh
 ```
 
 Or manually via Cloudflare Pages UI:
 
 1. Go to **Cloudflare Pages → nonusd → Deployments**
-2. Click **Upload assets** and upload `nonusd-cloudflare-v18.zipp`
+2. Click **Upload assets** and upload `nonusd-cloudflare-v20.zip`
 3. **Important:** ensure it deploys to the **Production** environment (not Preview)
 
 ### After Dashboard Deploy — Clear Client Cache
@@ -299,7 +320,7 @@ location.reload(true);
 
 ## Known Issues
 
-- **Some assets show "Not enough data" on SENDERS/TXNS sparklines.** Token Terminal returns only a single snapshot (not a time series) for `asset_dau` / `asset_transfer_count` on smaller or less-tracked assets. Nothing to fix — the fallback message is intentional.
+- **Some assets show \"Not enough data\" on SENDERS/TXNS sparklines.** Token Terminal returns only a single snapshot (not a time series) for `asset_dau` / `asset_transfer_count` on smaller or less-tracked assets. Nothing to fix — the fallback message is intentional.
 - **AUDX `dau: 0`**— DAU not tracked by Token Terminal for this asset.
 - **Duplicate asset IDs** (`eur0p`, `eurq`) in the Worker's asset registry are deduplicated by a `seen = new Set()` guard. Should be cleaned up in a future version.
 - **Token Terminal rate limits** — The Worker makes 40 parallel requests per refresh. On the free tier, some may 429. Check Worker logs if `assets < 40` on a refresh.
@@ -338,6 +359,8 @@ Each row in `data[]` represents one day; all requested metrics appear as fields 
 | v14 | Mar 2026 | Fixed Currency tab sparklines; DAU_SERIES/TXN_SERIES populated from Worker data |
 | v15 | Mar 2026 | Updated `processWorkerData()` to read top-level `dau_series`/`txn_series` maps from Worker v5; added localStorage cache (12h TTL) |
 | v18 | Mar 2026 | Added Trading Pairs feature (CoinGecko integration), Market Context comparison bars, Opportunity Gap visualization |
+| v19 | Mar 2026 | Added DeFi tab (DeFiLlama integration, hidden), dark mode with system preference detection and manual toggle, hid Trading Pairs and DeFi features for future release, removed DeFiLlama footer mention while feature is hidden |
+| v20 | Mar 2026 | Header redesign (larger title, vertical divider, more whitespace), footer redesign (two-row layout with NEXUS branding, X links, copyright, version badge), dark mode fixes for header title visibility and all footer elements |
 
 ### Worker
 
