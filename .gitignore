@@ -1,5 +1,22 @@
-node_modules/
-.wrangler/
-*.log
+# OS
 .DS_Store
+Thumbs.db
+
+# Wrangler / Cloudflare
+.wrangler/
+worker-deploy/.wrangler/
+
+# Temp zip artifacts & scratch files
+*.zip
+zi*
+
+# Old version snapshots
+index-v*.html
+preview-*.html
+v*-update.patch
+
+# Node
+node_modules/
+
+# Environment / secrets (API keys are in code for now — see README)
 .env

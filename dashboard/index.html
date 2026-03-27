@@ -67,6 +67,9 @@ tr:hover td{background:#f0f9ff}
 .pos{color:#10b981;font-weight:600}
 .neg{color:#ef4444;font-weight:600}
 .na{color:#94a3b8}
+.no-data-row td{opacity:.5}
+.no-data-row td:first-child{opacity:1}
+.no-data-badge{display:inline-block;font-size:9px;font-weight:700;color:#94a3b8;background:#f1f5f9;border:1px solid #e2e8f0;padding:1px 6px;border-radius:4px;letter-spacing:.03em;margin-left:6px;vertical-align:middle}
 .dot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:5px;vertical-align:middle}
 .bold{font-weight:700}
 .muted{color:#64748b}
@@ -102,8 +105,8 @@ tr:hover td{background:#f0f9ff}
 .pie-legend-row{display:flex;align-items:center;justify-content:space-between;font-size:12px}
 
 /* TRADING PAIRS */
-/* Hidden feature: Trading Pairs (enable by changing display to inline-flex) */
-.tp-toggle{display:none;align-items:center;gap:5px;padding:5px 12px;border-radius:6px;border:1px solid #e2e8f0;background:#f8fafc;cursor:pointer;font-size:11px;font-weight:600;color:#475569;transition:all .15s;margin-top:10px}
+/* Trading Pairs toggle */
+.tp-toggle{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:6px;border:1px solid #e2e8f0;background:#f8fafc;cursor:pointer;font-size:11px;font-weight:600;color:#475569;transition:all .15s;margin-top:10px}
 .tp-toggle:hover{border-color:#2563eb;color:#2563eb;background:#eff6ff}
 .tp-toggle.open{border-color:#2563eb;color:#2563eb;background:#eff6ff}
 .tp-toggle .tp-arrow{transition:transform .2s;font-size:9px}
@@ -163,20 +166,6 @@ tr:hover td{background:#f0f9ff}
 .view-btn{padding:4px 12px;border-radius:16px;border:1.5px solid #e2e8f0;background:#fff;cursor:pointer;font-size:12px;color:#64748b;font-weight:600;transition:all .15s}
 .view-btn.active{background:#2563eb;color:#fff;border-color:#2563eb}
 .activity-bar{display:inline-block;height:6px;border-radius:3px;vertical-align:middle;margin-right:5px}
-
-/* INSIGHTS */
-.insights-note{font-size:12px;color:#64748b;margin-bottom:12px;padding:9px 13px;background:#eff6ff;border-radius:8px;border-left:3px solid #2563eb}
-#insights-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:10px;margin-bottom:14px}
-.insight-card{background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:13px 15px}
-.insight-tag{font-size:11px;font-weight:800;letter-spacing:-.01em;margin-bottom:5px}
-.insight-txt{font-size:12.5px;line-height:1.75;color:#334155}
-.ins-tier{display:inline-flex;align-items:center;gap:4px;font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;padding:2px 7px;border-radius:10px;margin-bottom:6px}
-.ins-tier.analysis{background:#eff6ff;color:#2563eb}
-.ins-tier.risk{background:#fef2f2;color:#dc2626}
-.ins-tier.data{background:#f0fdf4;color:#15803d}
-.ins-tier.trend{background:#faf5ff;color:#7c3aed}
-.ins-implication{font-size:11px;color:#64748b;margin-top:7px;padding-top:7px;border-top:1px solid #f1f5f9;font-style:italic;line-height:1.6}
-
 
 /* BY BLOCKCHAIN */
 #chain-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-bottom:16px}
@@ -295,6 +284,36 @@ tr:hover td{background:#f0f9ff}
 .defi-vbtn{padding:4px 12px;border-radius:16px;border:1.5px solid #e2e8f0;background:#fff;cursor:pointer;font-size:12px;color:#64748b;font-weight:600;transition:all .15s}
 .defi-vbtn.active{background:#7c3aed;color:#fff;border-color:#7c3aed}
 
+/* CeD COMPARISON */
+.ced-header-bar{display:flex;align-items:center;gap:8px;margin-bottom:16px;padding:10px 14px;background:linear-gradient(90deg,#f0fdf4,#eff6ff);border:1px solid #e2e8f0;border-radius:10px;font-size:12px;color:#475569}
+.ced-grid{display:grid;grid-template-columns:1fr 60px 1fr;gap:0;margin-bottom:20px}
+.ced-col{padding:16px;border-radius:12px;background:#fff;border:1px solid #e2e8f0}
+.ced-col-c{border-left:3px solid #2563eb}
+.ced-col-d{border-left:3px solid #f59e0b}
+.ced-col-title{font-size:14px;font-weight:800;color:#0f172a;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.ced-dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+.ced-dot-c{background:#2563eb}
+.ced-dot-d{background:#f59e0b}
+.ced-kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+.ced-kpi{padding:10px;border-radius:8px;background:#f8fafc;border:1px solid #f1f5f9}
+.ced-kpi-val{font-size:18px;font-weight:800;color:#0f172a}
+.ced-kpi-lab{font-size:10px;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;margin-top:2px}
+.ced-assets-label{font-size:10px;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin-bottom:6px}
+.ced-assets-list{display:flex;flex-direction:column;gap:4px}
+.ced-asset-row{display:flex;justify-content:space-between;align-items:center;font-size:11px;padding:4px 8px;border-radius:6px;background:#f8fafc}
+.ced-asset-row .ced-ar-name{font-weight:700;color:#0f172a}
+.ced-asset-row .ced-ar-mc{color:#64748b}
+.ced-vs{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:0 4px}
+.ced-vs-label{font-size:11px;font-weight:900;color:#94a3b8;letter-spacing:.08em}
+.ced-vs-bar{width:2px;flex:1;background:#e2e8f0;border-radius:2px}
+.ced-bars{display:flex;flex-direction:column;gap:10px}
+.ced-bar-row{display:flex;flex-direction:column;gap:4px}
+.ced-bar-label{font-size:10px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.04em}
+.ced-bar-track{display:flex;height:24px;border-radius:6px;overflow:hidden;background:#f1f5f9}
+.ced-bar-fill-c{background:#2563eb;display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:700;min-width:30px;transition:width .3s}
+.ced-bar-fill-d{background:#f59e0b;display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:700;min-width:30px;transition:width .3s}
+@media(max-width:700px){.ced-grid{grid-template-columns:1fr;gap:10px}.ced-vs{flex-direction:row;padding:8px 0}.ced-vs-bar{width:auto;height:2px;flex:1}}
+
 /* FOOTER */
 footer{padding:20px 28px;font-size:11px;color:#94a3b8;border-top:1px solid #e2e8f0;margin-top:16px}
 .footer-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:10px}
@@ -409,7 +428,6 @@ footer{padding:20px 28px;font-size:11px;color:#94a3b8;border-top:1px solid #e2e8
 [data-theme="dark"] .asset-card,
 [data-theme="dark"] .issuer-card,
 [data-theme="dark"] .chain-card,
-[data-theme="dark"] .insight-card,
 [data-theme="dark"] .cont-card,
 [data-theme="dark"] .kpi-card,
 [data-theme="dark"] .defi-kpi,
@@ -455,8 +473,6 @@ footer{padding:20px 28px;font-size:11px;color:#94a3b8;border-top:1px solid #e2e8
 [data-theme="dark"] .cont-mc{color:#e2e4e9}
 [data-theme="dark"] .cont-pct{color:#7a7f8e}
 [data-theme="dark"] .cont-assets{color:#5a5f6e}
-[data-theme="dark"] .insight-txt{color:#b0b5c2}
-[data-theme="dark"] .ins-implication{color:#7a7f8e;border-top-color:#1e1e26}
 [data-theme="dark"] .kpi-label{color:#5a5f6e}
 [data-theme="dark"] .kpi-value{color:#e2e4e9}
 [data-theme="dark"] .kpi-sub{color:#5a5f6e}
@@ -482,6 +498,7 @@ footer{padding:20px 28px;font-size:11px;color:#94a3b8;border-top:1px solid #e2e8
 [data-theme="dark"] .bold{color:#e2e4e9}
 [data-theme="dark"] .muted{color:#7a7f8e}
 [data-theme="dark"] .na{color:#5a5f6e}
+[data-theme="dark"] .no-data-badge{background:#1a1920;border-color:#2a2a34;color:#5a5f6e}
 [data-theme="dark"] .tp-exchange{color:#e2e4e9}
 
 /* Buttons & toggles */
@@ -527,13 +544,6 @@ footer{padding:20px 28px;font-size:11px;color:#94a3b8;border-top:1px solid #e2e8
 [data-theme="dark"] #defi-filters select,
 [data-theme="dark"] #defi-filters input{background:#15141a;border-color:#2a2a34;color:#b0b5c2}
 
-/* Insights */
-[data-theme="dark"] .insights-note{background:rgba(37,99,235,.1);border-left-color:#2563eb;color:#7a7f8e}
-[data-theme="dark"] .ins-tier.analysis{background:rgba(37,99,235,.15);color:#60a5fa}
-[data-theme="dark"] .ins-tier.risk{background:rgba(220,38,38,.15);color:#f87171}
-[data-theme="dark"] .ins-tier.data{background:rgba(21,128,61,.15);color:#4ade80}
-[data-theme="dark"] .ins-tier.trend{background:rgba(124,58,237,.15);color:#a78bfa}
-
 /* Market context */
 [data-theme="dark"] .ctx-bar-track{background:#1e1e26}
 [data-theme="dark"] .ctx-bar-name{color:#b0b5c2}
@@ -559,6 +569,20 @@ footer{padding:20px 28px;font-size:11px;color:#94a3b8;border-top:1px solid #e2e8
 [data-theme="dark"] .ld-status{color:#5a5f6e}
 
 /* Footer */
+[data-theme="dark"] .ced-header-bar{background:linear-gradient(90deg,#111614,#111318);border-color:#1e1e26;color:#7a7f8e}
+[data-theme="dark"] .ced-col{background:#15141a;border-color:#1e1e26}
+[data-theme="dark"] .ced-col-title{color:#e2e4e9}
+[data-theme="dark"] .ced-kpi{background:#1a1920;border-color:#1e1e26}
+[data-theme="dark"] .ced-kpi-val{color:#e2e4e9}
+[data-theme="dark"] .ced-kpi-lab{color:#5a5f6e}
+[data-theme="dark"] .ced-assets-label{color:#5a5f6e}
+[data-theme="dark"] .ced-asset-row{background:#1a1920}
+[data-theme="dark"] .ced-asset-row .ced-ar-name{color:#e2e4e9}
+[data-theme="dark"] .ced-asset-row .ced-ar-mc{color:#7a7f8e}
+[data-theme="dark"] .ced-vs-label{color:#5a5f6e}
+[data-theme="dark"] .ced-vs-bar{background:#1e1e26}
+[data-theme="dark"] .ced-bar-label{color:#7a7f8e}
+[data-theme="dark"] .ced-bar-track{background:#1a1920}
 [data-theme="dark"] footer{border-top-color:#1e1e26;color:#5a5f6e}
 [data-theme="dark"] #data-freshness{color:#5a5f6e}
 [data-theme="dark"] .footer-brand .fb-name{color:#e2e4e9}
@@ -820,11 +844,10 @@ function grantAccess(method) {
   <button class="tab-btn" onclick="showTab('currency',this)">By Currency</button>
   <button class="tab-btn" onclick="showTab('issuer',this)">By Issuer</button>
   <button class="tab-btn" onclick="showTab('assets',this)">All Assets</button>
-  <button class="tab-btn" onclick="showTab('insights',this)">Insights</button>
   <button class="tab-btn" onclick="showTab('blockchain',this)">By Blockchain</button>
   <button class="tab-btn" onclick="showTab('continent',this)">By Region</button>
-  <!-- Hidden feature: DeFi tab (enable by removing display:none) -->
-  <button class="tab-btn" onclick="showTab('defi',this)" style="display:none" id="defi-tab-btn">DeFi</button>
+  <button class="tab-btn" onclick="showTab('ced',this)" id="ced-tab-btn">CeD Compare</button>
+  <button class="tab-btn" onclick="showTab('defi',this)" id="defi-tab-btn">DeFi</button>
 </div>
 
 <div id="main">
@@ -862,7 +885,7 @@ function grantAccess(method) {
     </div>
 
     <!-- ── FEATURE 1: STABLECOIN MARKET CONTEXT (full width) ──────────── -->
-    <div id="market-context" style="display:none">
+    <div id="market-context">
       <div class="chart-box" id="ctx-mc-box">
         <h3>Stablecoin Market Context</h3>
         <div id="ctx-mc-bars"></div>
@@ -871,7 +894,7 @@ function grantAccess(method) {
     </div>
 
     <!-- ── FEATURE 2: THE OPPORTUNITY GAP (full width, bottom) ────────── -->
-    <div id="fx-context" style="display:none">
+    <div id="fx-context">
       <div class="chart-box" id="ctx-fx-box">
         <h3>The Opportunity Gap <span style="font-weight:400;color:#94a3b8;font-size:9px;text-transform:none;letter-spacing:0">log scale</span></h3>
         <div id="ctx-fx-scale"></div>
@@ -884,7 +907,7 @@ function grantAccess(method) {
   <div id="panel-currency" class="panel">
     <div id="cur-selector"></div>
     <div id="cur-banner"></div>
-    <div id="cur-compare-wrap" style="display:none;margin-bottom:12px">
+    <div id="cur-compare-wrap" style="margin-bottom:12px">
       <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:14px 16px">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:6px">
           <h3 style="font-size:10px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.06em;margin:0" id="compare-title">Asset Comparison — Growth Index (180d)</h3>
@@ -919,16 +942,6 @@ function grantAccess(method) {
         </div>
       </div>
       <table id="all-assets-table"></table>
-    </div>
-  </div>
-
-  <!-- INSIGHTS -->
-  <div id="panel-insights" class="panel">
-    <div class="insights-note">Auto-generated from real Token Terminal API data. All figures sourced directly — no estimates.</div>
-    <div id="insights-grid"></div>
-    <div class="table-box">
-      <h3>Performance Signals · 30d / 90d / 180d</h3>
-      <table id="signals-table"></table>
     </div>
   </div>
 
@@ -987,6 +1000,37 @@ function grantAccess(method) {
   </div>
 
   <!-- DEFI -->
+  <!-- ── CENTRALIZED vs DECENTRALIZED COMPARISON ── -->
+  <div id="panel-ced" class="panel">
+    <div class="ced-header-bar">
+      <span style="font-size:15px">⚖️</span>
+      <span>Comparing <strong>Centralized</strong> (fiat-backed, custodial) vs <strong>Decentralized</strong> (algorithmic, wrapped, DAO-governed) non-USD stablecoins</span>
+    </div>
+    <div class="ced-grid">
+      <!-- Centralized Column -->
+      <div class="ced-col ced-col-c">
+        <div class="ced-col-title"><span class="ced-dot ced-dot-c"></span> Centralized</div>
+        <div class="ced-kpi-grid" id="ced-kpis-c"></div>
+        <div class="ced-assets-label">Top Assets</div>
+        <div class="ced-assets-list" id="ced-assets-c"></div>
+      </div>
+      <!-- VS Divider -->
+      <div class="ced-vs">
+        <div class="ced-vs-label">VS</div>
+        <div class="ced-vs-bar" id="ced-vs-bar"></div>
+      </div>
+      <!-- Decentralized Column -->
+      <div class="ced-col ced-col-d">
+        <div class="ced-col-title"><span class="ced-dot ced-dot-d"></span> Decentralized</div>
+        <div class="ced-kpi-grid" id="ced-kpis-d"></div>
+        <div class="ced-assets-label">Top Assets</div>
+        <div class="ced-assets-list" id="ced-assets-d"></div>
+      </div>
+    </div>
+    <!-- Metric comparison bars -->
+    <div class="ced-bars" id="ced-bars"></div>
+  </div>
+
   <div id="panel-defi" class="panel">
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;padding:10px 14px;background:linear-gradient(90deg,#f5f3ff,#eff6ff);border:1px solid #e2e8f0;border-radius:10px;font-size:12px;color:#475569">
       <span style="font-size:15px">📡</span>
@@ -1057,52 +1101,72 @@ function grantAccess(method) {
       <a href="https://tokenterminal.com" target="_blank" rel="noopener">Token Terminal</a>
       &nbsp;·&nbsp; <span id="footer-counts"></span> &nbsp;·&nbsp; <span id="data-freshness" style="font-size:10px"></span>
     </div>
-    <span class="footer-version">v20</span>
+    <span class="footer-version">v24</span>
   </div>
 </footer>
 
 <script>
 const ASSET_META = [
-  {id:"eurc",  name:"EURC",  cur:"EUR", iss:"Circle",          chains:["ethereum","solana","base","avalanche","stellar"]},
-  {id:"eure",  name:"EURE",  cur:"EUR", iss:"Monerium",         chains:["ethereum","gnosis","polygon","arbitrum","linea"]},
-  {id:"eurs",  name:"EURS",  cur:"EUR", iss:"STASIS",           chains:["ethereum","polygon","stellar","xdc"]},
-  {id:"eura",  name:"EURA",  cur:"EUR", iss:"Angle",            chains:["ethereum"]},
-  {id:"eurm",  name:"EURM",  cur:"EUR", iss:"VNX",              chains:["celo"]},
-  {id:"eurr",  name:"EURR",  cur:"EUR", iss:"Crypto.com",       chains:["ethereum"]},
-  {id:"eurq",  name:"EURQ",  cur:"EUR", iss:"Quantoz",          chains:["ethereum","polygon"]},
-  {id:"eur0",  name:"EUR0",  cur:"EUR", iss:"Level-01",         chains:[]},
-  {id:"eur0p", name:"EUR0+", cur:"EUR", iss:"Level-01",         chains:[]},
-  {id:"eurcv", name:"EURCV", cur:"EUR", iss:"Soc. Générale",    chains:["ethereum","solana"]},
-  {id:"veur",  name:"VEUR",  cur:"EUR", iss:"VNX",              chains:["solana","base","polygon","avalanche","stellar","celo","arbitrum"]},
-  {id:"eurt",  name:"EURT",  cur:"EUR", iss:"Tether",           chains:["ethereum"]},
-  {id:"eurau", name:"EURAU", cur:"EUR", iss:"Auxo",             chains:["ethereum","base","arbitrum"]},
-  {id:"gbpm",  name:"GBPM",  cur:"GBP", iss:"Monerium",         chains:["celo"]},
-  {id:"gbpe",  name:"GBPE",  cur:"GBP", iss:"Backed",           chains:["gnosis"]},
-  {id:"vgbp",  name:"VGBP",  cur:"GBP", iss:"VNX",             chains:["solana","base","celo"]},
-  {id:"jpyc",  name:"JPYC",  cur:"JPY", iss:"JPYC Inc.",        chains:["ethereum","polygon","avalanche"]},
-  {id:"jpym",  name:"JPYM",  cur:"JPY", iss:"Mercuryo",         chains:["celo"]},
-  {id:"gyen",  name:"GYEN",  cur:"JPY", iss:"GMO Internet",     chains:["ethereum","solana"]},
-  {id:"chfm",  name:"CHFM",  cur:"CHF", iss:"VNX",             chains:["celo"]},
-  {id:"vchf",  name:"VCHF",  cur:"CHF", iss:"VNX",             chains:["ethereum","solana","base","polygon","avalanche","stellar","celo","arbitrum"]},
-  {id:"cadm",  name:"CADM",  cur:"CAD", iss:"VNX",             chains:["celo"]},
-  {id:"audm",  name:"AUDM",  cur:"AUD", iss:"VNX",             chains:["celo"]},
-  {id:"audd",  name:"AUDD",  cur:"AUD", iss:"Novatti",          chains:["ethereum","solana","base","xdc"]},
-  {id:"audx",  name:"AUDX",  cur:"AUD", iss:"STASIS",           chains:["ethereum","polygon"]},
-  {id:"mxnb",  name:"MXNB",  cur:"MXN", iss:"Bitso",           chains:["ethereum","polygon","avalanche","arbitrum"]},
-  {id:"wmxn",  name:"WMXN",  cur:"MXN", iss:"Wrapped Finance",  chains:["ethereum","base","worldchain"]},
-  {id:"copm",  name:"COPM",  cur:"COP", iss:"Mercado Pago",     chains:[]},
-  {id:"wcop",  name:"WCOP",  cur:"COP", iss:"Wrapped Finance",  chains:["ethereum","base","worldchain"]},
-  {id:"brlm",  name:"BRLM",  cur:"BRL", iss:"VNX",             chains:["celo"]},
-  {id:"wars",  name:"WARS",  cur:"ARS", iss:"Wrapped Finance",  chains:["ethereum","base","worldchain"]},
-  {id:"wclp",  name:"WCLP",  cur:"CLP", iss:"Wrapped Finance",  chains:["ethereum","base","worldchain"]},
-  {id:"wpen",  name:"WPEN",  cur:"PEN", iss:"Wrapped Finance",  chains:["ethereum","base","worldchain"]},
-  {id:"phpm",  name:"PHPM",  cur:"PHP", iss:"Ayaversity",       chains:["celo"]},
-  {id:"zarm",  name:"ZARM",  cur:"ZAR", iss:"Wrapped Finance",  chains:["celo"]},
-  {id:"kesm",  name:"KESM",  cur:"KES", iss:"Cowrie",           chains:["celo"]},
-  {id:"myrc",  name:"MYRC",  cur:"MYR", iss:"Ringgit Protocol", chains:["solana","base","arbitrum"]},
-  {id:"ngnm",  name:"NGNM",  cur:"NGN", iss:"Cowrie",           chains:["celo"]},
-  {id:"xsgd",  name:"XSGD",  cur:"SGD", iss:"Xfers/Fazz",      chains:["ethereum","base","polygon","avalanche","arbitrum"]},
-  {id:"cghs",  name:"CGHS",  cur:"GHS", iss:"Cowrie",           chains:["celo"]}
+  {id:"eurc",  name:"EURC",  cur:"EUR", iss:"Circle",          type:"C", chains:["ethereum","solana","base","avalanche","stellar"]},
+  {id:"eure",  name:"EURE",  cur:"EUR", iss:"Monerium",         type:"C", chains:["ethereum","gnosis","polygon","arbitrum","linea"]},
+  {id:"eurs",  name:"EURS",  cur:"EUR", iss:"STASIS",           type:"C", chains:["ethereum","polygon","stellar","xdc"]},
+  {id:"eura",  name:"EURA",  cur:"EUR", iss:"Angle",            type:"D", chains:["ethereum"]},
+  {id:"eurm",  name:"EURM",  cur:"EUR", iss:"Mento Labs",        type:"C", chains:["celo"]},
+  {id:"eurr",  name:"EURR",  cur:"EUR", iss:"StablR",            type:"C", chains:["ethereum"]},
+  {id:"eurq",  name:"EURQ",  cur:"EUR", iss:"Quantoz",          type:"C", chains:["ethereum","polygon"]},
+  {id:"eur0",  name:"EUR0",  cur:"EUR", iss:"Level-01",         type:"C", chains:[]},
+  {id:"eur0p", name:"EUR0+", cur:"EUR", iss:"Level-01",         type:"C", chains:[]},
+  {id:"eurcv", name:"EURCV", cur:"EUR", iss:"Soc. Générale",    type:"C", chains:["ethereum","solana"]},
+  {id:"veur",  name:"VEUR",  cur:"EUR", iss:"VNX",              type:"C", chains:["solana","base","polygon","avalanche","stellar","celo","arbitrum"]},
+  {id:"eurt",  name:"EURT",  cur:"EUR", iss:"Tether",           type:"C", chains:["ethereum"]},
+  {id:"eurau", name:"EURAU", cur:"EUR", iss:"Auxo",             type:"D", chains:["ethereum","base","arbitrum"]},
+  {id:"eurot", name:"EUROT", cur:"EUR", iss:"Token Teknoloji",  type:"C", chains:["ethereum"]},
+  {id:"par",   name:"PAR",   cur:"EUR", iss:"Mimo Capital",     type:"D", chains:["ethereum","polygon"]},
+  {id:"ibeur", name:"ibEUR", cur:"EUR", iss:"Iron Bank",        type:"D", chains:["ethereum"]},
+  {id:"aryzeeeur",name:"eEUR",cur:"EUR", iss:"ARYZE",           type:"C", chains:["ethereum"]},
+  {id:"euro3", name:"EURO3", cur:"EUR", iss:"3A DAO",           type:"D", chains:["ethereum","polygon"]},
+  {id:"euroe", name:"EUROe", cur:"EUR", iss:"Membrane Finance", type:"C", chains:["ethereum","polygon","arbitrum","avalanche"]},
+  {id:"aeur",  name:"AEUR",  cur:"EUR", iss:"Anchored Coins",  type:"C", chains:["ethereum"]},
+  {id:"seur",  name:"sEUR",  cur:"EUR", iss:"Synthetix",       type:"D", chains:["ethereum","optimism"]},
+  {id:"egbp",  name:"eGBP",  cur:"GBP", iss:"ARYZE",           type:"C", chains:["ethereum"]},
+  {id:"gbpm",  name:"GBPM",  cur:"GBP", iss:"Mento Labs",        type:"C", chains:["celo"]},
+  {id:"gbpe",  name:"GBPE",  cur:"GBP", iss:"Backed",           type:"C", chains:["gnosis"]},
+  {id:"vgbp",  name:"VGBP",  cur:"GBP", iss:"VNX",             type:"C", chains:["solana","base","celo"]},
+  {id:"jpyc",  name:"JPYC",  cur:"JPY", iss:"JPYC Inc.",        type:"C", chains:["ethereum","polygon","avalanche"]},
+  {id:"jpym",  name:"JPYM",  cur:"JPY", iss:"Mento Labs",        type:"C", chains:["celo"]},
+  {id:"gyen",  name:"GYEN",  cur:"JPY", iss:"GMO Internet",     type:"C", chains:["ethereum","solana"]},
+  {id:"cjpy",  name:"CJPY",  cur:"JPY", iss:"Yamato Protocol",  type:"D", chains:["ethereum"]},
+  {id:"chfm",  name:"CHFM",  cur:"CHF", iss:"Mento Labs",       type:"C", chains:["celo"]},
+  {id:"vchf",  name:"VCHF",  cur:"CHF", iss:"VNX",             type:"C", chains:["ethereum","solana","base","polygon","avalanche","stellar","celo","arbitrum"]},
+  {id:"zchf",  name:"ZCHF",  cur:"CHF", iss:"Frankencoin",     type:"D", chains:["ethereum"]},
+  {id:"achf",  name:"ACHF",  cur:"CHF", iss:"Anchored Coins",  type:"C", chains:["ethereum"]},
+  {id:"dchf",  name:"DCHF",  cur:"CHF", iss:"DeFi Franc",      type:"D", chains:["ethereum"]},
+  {id:"cadm",  name:"CADM",  cur:"CAD", iss:"Mento Labs",       type:"C", chains:["celo"]},
+  {id:"qcad",  name:"QCAD",  cur:"CAD", iss:"Stablecorp",      type:"C", chains:["ethereum"]},
+  {id:"cadc",  name:"CADC",  cur:"CAD", iss:"PayTrie",          type:"C", chains:["ethereum"]},
+  {id:"audm",  name:"AUDM",  cur:"AUD", iss:"Mento Labs",       type:"C", chains:["celo"]},
+  {id:"audd",  name:"AUDD",  cur:"AUD", iss:"Novatti",          type:"C", chains:["ethereum","solana","base","xdc"]},
+  {id:"audx",  name:"AUDX",  cur:"AUD", iss:"STASIS",           type:"C", chains:["ethereum","polygon"]},
+  {id:"audf",  name:"AUDF",  cur:"AUD", iss:"Forte",            type:"C", chains:["ethereum"]},
+  {id:"mxnb",  name:"MXNB",  cur:"MXN", iss:"Bitso",           type:"C", chains:["ethereum","polygon","avalanche","arbitrum"]},
+  {id:"wmxn",  name:"WMXN",  cur:"MXN", iss:"Wrapped Finance",  type:"D", chains:["ethereum","base","worldchain"]},
+  {id:"copm",  name:"COPM",  cur:"COP", iss:"Mento Labs",        type:"C", chains:["celo"]},
+  {id:"wcop",  name:"WCOP",  cur:"COP", iss:"Wrapped Finance",  type:"D", chains:["ethereum","base","worldchain"]},
+  {id:"brlm",  name:"BRLM",  cur:"BRL", iss:"Mento Labs",       type:"C", chains:["celo"]},
+  {id:"brz",   name:"BRZ",   cur:"BRL", iss:"Transfero",       type:"C", chains:["ethereum","solana","stellar","tron"]},
+  {id:"wars",  name:"WARS",  cur:"ARS", iss:"Wrapped Finance",  type:"D", chains:["ethereum","base","worldchain"]},
+  {id:"wclp",  name:"WCLP",  cur:"CLP", iss:"Wrapped Finance",  type:"D", chains:["ethereum","base","worldchain"]},
+  {id:"wpen",  name:"WPEN",  cur:"PEN", iss:"Wrapped Finance",  type:"D", chains:["ethereum","base","worldchain"]},
+  {id:"tryb",  name:"TRYB",  cur:"TRY", iss:"BiLira",           type:"C", chains:["ethereum","bsc","avalanche"]},
+  {id:"phpm",  name:"PHPM",  cur:"PHP", iss:"Mento Labs",        type:"C", chains:["celo"]},
+  {id:"pht",   name:"PHT",   cur:"PHP", iss:"Apacx",            type:"C", chains:["ethereum"]},
+  {id:"zarm",  name:"ZARM",  cur:"ZAR", iss:"Mento Labs",        type:"D", chains:["celo"]},
+  {id:"mzar",  name:"mZAR",  cur:"ZAR", iss:"Mesh",             type:"C", chains:["ethereum"]},
+  {id:"kesm",  name:"KESM",  cur:"KES", iss:"Mento Labs",        type:"C", chains:["celo"]},
+  {id:"myrc",  name:"MYRC",  cur:"MYR", iss:"Ringgit Protocol", type:"D", chains:["solana","base","arbitrum"]},
+  {id:"ngnm",  name:"NGNM",  cur:"NGN", iss:"Mento Labs",        type:"C", chains:["celo"]},
+  {id:"xsgd",  name:"XSGD",  cur:"SGD", iss:"Xfers/Fazz",      type:"C", chains:["ethereum","base","polygon","avalanche","arbitrum"]},
+  {id:"cghs",  name:"CGHS",  cur:"GHS", iss:"Mento Labs",        type:"C", chains:["celo"]}
 ];
 
 const CMETA = {
@@ -1124,7 +1188,8 @@ const CMETA = {
   ARS: { color:"#60a5fa", flag:"🇦🇷", name:"Argentine Peso" },
   CLP: { color:"#c084fc", flag:"🇨🇱", name:"Chilean Peso" },
   COP: { color:"#fbbf24", flag:"🇨🇴", name:"Colombian Peso" },
-  PEN: { color:"#94a3b8", flag:"🇵🇪", name:"Peruvian Sol" }
+  PEN: { color:"#94a3b8", flag:"🇵🇪", name:"Peruvian Sol" },
+  TRY: { color:"#e30a17", flag:"🇹🇷", name:"Turkish Lira" }
 };
 
 const CHAIN_STATIC = {
@@ -1139,15 +1204,18 @@ const CHAIN_STATIC = {
   arbitrum: {name:"Arbitrum",   color:"#12aaff", logo:"🔷", logoUrl:"https://cdn.jsdelivr.net/gh/trustwallet/assets@master/blockchains/arbitrum/info/logo.png"},
   xdc:      {name:"XDC",        color:"#f49800", logo:"◈",  logoUrl:"https://cdn.jsdelivr.net/gh/trustwallet/assets@master/blockchains/xdc/info/logo.png"},
   linea:    {name:"Linea",      color:"#61dfff", logo:"▲",  logoUrl:"https://cdn.jsdelivr.net/gh/trustwallet/assets@master/blockchains/linea/info/logo.png"},
-  worldchain:{name:"World Chain",color:"#000000",logo:"🌍", logoUrl:""}
+  worldchain:{name:"World Chain",color:"#000000",logo:"🌍", logoUrl:""},
+  optimism:  {name:"Optimism",   color:"#ff0420",logo:"🔴", logoUrl:"https://cdn.jsdelivr.net/gh/trustwallet/assets@master/blockchains/optimism/info/logo.png"},
+  tron:      {name:"Tron",       color:"#eb0029",logo:"⚡", logoUrl:"https://cdn.jsdelivr.net/gh/trustwallet/assets@master/blockchains/tron/info/logo.png"},
+  bsc:       {name:"BNB Chain",  color:"#f0b90b",logo:"⬡",  logoUrl:"https://cdn.jsdelivr.net/gh/trustwallet/assets@master/blockchains/binance/info/logo.png"}
 };
 
 // Continent groupings (static — which assets belong to which continent)
 const CONT_GROUPS = {
-  'Europe':      ['eurc','eure','eurs','eura','eurm','eurr','eurq','eur0','eur0p','eurcv','veur','eurt','eurau','gbpm','gbpe','vgbp','vchf','chfm'],
-  'Asia-Pacific':['jpyc','jpym','gyen','audm','audd','audx','myrc','phpm','xsgd'],
-  'Americas':    ['cadm','mxnb','wmxn','copm','wcop','brlm','wars','wclp','wpen'],
-  'Africa':      ['kesm','ngnm','cghs','zarm']
+  'Europe':      ['eurc','eure','eurs','eura','eurm','eurr','eurq','eur0','eur0p','eurcv','veur','eurt','eurau','eurot','par','ibeur','aryzeeeur','euro3','euroe','aeur','seur','gbpm','gbpe','vgbp','egbp','vchf','chfm','zchf','achf','dchf'],
+  'Asia-Pacific':['jpyc','jpym','gyen','cjpy','audm','audd','audx','audf','myrc','phpm','pht','xsgd'],
+  'Americas':    ['cadm','qcad','cadc','mxnb','wmxn','copm','wcop','brlm','brz','wars','wclp','wpen','tryb'],
+  'Africa':      ['kesm','ngnm','cghs','zarm','mzar']
 };
 const CONT_ORDER = ['Europe','Asia-Pacific','Americas','Africa'];
 
@@ -1177,11 +1245,126 @@ const CONFIG = {
   // Your Token Terminal API key — also stored server-side in the Netlify Function
   TT_KEY:       '48c17a65-bb2f-45b5-a609-5debd0e5187f',
   TT_BASE:      'https://api.tokenterminal.com/v2',
-  CACHE_KEY:    'nsi_live_v2',
-  CACHE_TTL:    12 * 60 * 60 * 1000,   // 12 hours
+  CACHE_KEY:    'nsi_live_v24',
+  CACHE_TTL:    6 * 60 * 60 * 1000,    // 6 hours
   // Live data Worker — pre-processes TT + FX data, returns ready-to-use JSON
   WORKER_URL:   'https://nonusd-data.0xtakeprofits.workers.dev/data',
+  REFRESH_INTERVAL: 6 * 60 * 60 * 1000, // 6 hours — auto-refresh cycle
+  // Non-fiat asset IDs to exclude from discovery (yield strategies, not fiat-pegged)
+  EXCLUDE_IDS:  new Set(['float','rai','volt','zuneth','zunusd','feth']),
 };
+
+// ── DYNAMIC ASSET DISCOVERY ──────────────────────────────────────────────────
+// Currency inference from Token Terminal asset naming conventions
+const CUR_KEYWORDS = {
+  EUR:['eur','euro'],GBP:['gbp'],CHF:['chf','franc'],JPY:['jpy','yen'],
+  AUD:['aud'],CAD:['cad'],MXN:['mxn','peso-m','mexican'],BRL:['brl','brz','brazilian'],
+  PHP:['php','pht','philippine'],MYR:['myr','ringgit'],NGN:['ngn','naira'],
+  KES:['kes','shilling'],ZAR:['zar','rand'],GHS:['ghs','cedi'],
+  ARS:['ars','argentine'],CLP:['clp','chilean'],COP:['cop','colombian'],
+  PEN:['pen','peruvian','sol'],TRY:['try','lira'],SGD:['sgd','singapore'],
+  IDR:['idr','rupiah'],THB:['thb','baht'],INR:['inr','rupee'],KRW:['krw','won'],
+  HKD:['hkd','hong kong'],TWD:['twd','taiwan'],NZD:['nzd','new zealand'],
+  SEK:['sek','krona'],NOK:['nok','krone'],DKK:['dkk','danish'],PLN:['pln','zloty'],
+  CZK:['czk','koruna'],HUF:['huf','forint'],RON:['ron','leu'],
+  AED:['aed','dirham'],SAR:['sar','riyal'],ILS:['ils','shekel'],
+};
+const CONT_CUR_MAP = {
+  EUR:'Europe',GBP:'Europe',CHF:'Europe',SEK:'Europe',NOK:'Europe',DKK:'Europe',
+  PLN:'Europe',CZK:'Europe',HUF:'Europe',RON:'Europe',TRY:'Europe',
+  JPY:'Asia-Pacific',AUD:'Asia-Pacific',SGD:'Asia-Pacific',PHP:'Asia-Pacific',
+  MYR:'Asia-Pacific',IDR:'Asia-Pacific',THB:'Asia-Pacific',INR:'Asia-Pacific',
+  KRW:'Asia-Pacific',HKD:'Asia-Pacific',TWD:'Asia-Pacific',NZD:'Asia-Pacific',
+  CAD:'Americas',MXN:'Americas',BRL:'Americas',ARS:'Americas',CLP:'Americas',
+  COP:'Americas',PEN:'Americas',
+  NGN:'Africa',KES:'Africa',ZAR:'Africa',GHS:'Africa',
+  AED:'Middle East',SAR:'Middle East',ILS:'Middle East',
+};
+
+// Attempt to infer currency from asset id + name
+function inferCurrency(id, name) {
+  const combo = (id + ' ' + name).toLowerCase();
+  for (const [cur, kws] of Object.entries(CUR_KEYWORDS)) {
+    if (kws.some(kw => combo.includes(kw))) return cur;
+  }
+  return null;
+}
+
+// Discover new assets from Token Terminal that aren't in ASSET_META
+async function discoverNewAssets() {
+  const knownIds = new Set(ASSET_META.map(a => a.id));
+  try {
+    // Fetch list of all stablecoin assets from TT
+    const resp = await fetch(`${CONFIG.TT_BASE}/internal/metrics?` + new URLSearchParams({
+      'metric_ids[]': 'asset_market_cap_circulating',
+      'groupBy': 'assets',
+      'market_sector_ids[]': 'stablecoins',
+      'interval': '7d',
+      'limit': '1'
+    }).toString(), {
+      headers: { 'Authorization': `Bearer ${CONFIG.TT_KEY}`, 'Accept': 'application/json' }
+    });
+    if (!resp.ok) return [];
+    const text = await resp.text();
+    const rows = parseRows(text);
+    const discovered = new Set();
+    const newAssets = [];
+    rows.forEach(r => {
+      const aid = r.asset_id;
+      if (!aid || knownIds.has(aid) || CONFIG.EXCLUDE_IDS.has(aid) || discovered.has(aid)) return;
+      // Skip USD-pegged assets
+      const combo = (aid + ' ' + (r.product_id || '')).toLowerCase();
+      if (combo.includes('usd') || combo.includes('usdt') || combo.includes('usdc') || combo.includes('dai') || combo.includes('busd')) return;
+      const cur = inferCurrency(aid, r.product_id || aid);
+      if (!cur) return; // Can't determine currency — skip
+      discovered.add(aid);
+      newAssets.push({
+        id: aid,
+        name: aid.toUpperCase(),
+        cur: cur,
+        iss: 'Unknown',
+        type: 'C',
+        chains: [],
+        _discovered: true
+      });
+    });
+    if (newAssets.length > 0) {
+      console.info(`[NSI] Discovered ${newAssets.length} new assets from Token Terminal:`, newAssets.map(a => a.id));
+      // Add to ASSET_META so they get fetched + rendered
+      newAssets.forEach(a => {
+        ASSET_META.push(a);
+        // Add to CONT_GROUPS
+        const cont = CONT_CUR_MAP[a.cur] || 'Other';
+        if (CONT_GROUPS[cont]) CONT_GROUPS[cont].push(a.id);
+        else { CONT_GROUPS[cont] = [a.id]; if (!CONT_ORDER.includes(cont)) CONT_ORDER.push(cont); }
+        // Add to CMETA if new currency
+        if (!CMETA[a.cur]) {
+          CMETA[a.cur] = { color: '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6,'0'), flag: '\u{1F310}', name: a.cur };
+        }
+      });
+    }
+    return newAssets;
+  } catch (e) {
+    console.warn('[NSI] Asset discovery failed:', e);
+    return [];
+  }
+}
+
+// ── AUTO-REFRESH ─────────────────────────────────────────────────────────────
+let _refreshTimer = null;
+function scheduleAutoRefresh() {
+  if (_refreshTimer) clearInterval(_refreshTimer);
+  _refreshTimer = setInterval(async () => {
+    console.info('[NSI] Auto-refresh triggered (6h cycle)');
+    try {
+      // Clear cache to force fresh fetch
+      try { localStorage.removeItem(CONFIG.CACHE_KEY); } catch(_){}
+      await loadData();
+    } catch (e) { console.error('[NSI] Auto-refresh failed:', e); }
+  }, CONFIG.REFRESH_INTERVAL);
+  // Also show countdown in the freshness indicator
+  console.info('[NSI] Auto-refresh scheduled every 6 hours');
+}
 
 // ── COINGECKO TRADING PAIRS ──────────────────────────────────────────────────
 // Maps dashboard asset IDs → CoinGecko IDs (null = not listed on CoinGecko)
@@ -1190,21 +1373,23 @@ const CG_ID_MAP = {
   'eurc':'euro-coin','eure':'monerium-eur-money','eurs':'stasis-eurs','eura':null,
   'eurm':null,'eurr':'stablr-euro','eurq':'quantoz-eurq','eur0':null,'eur0p':null,
   'eurcv':'societe-generale-forge-eurcv','veur':'vnx-euro','eurt':'euro-tether','eurau':'allunity-eur',
+  'eurot':null,'par':'mimo-capital-ag-par','ibeur':null,'aryzeeeur':null,
+  'euro3':null,'euroe':'euroe-stablecoin','aeur':null,'seur':'seur',
   // GBP
-  'gbpm':null,'gbpe':'monerium-gbp-emoney','vgbp':'vnx-british-pound',
+  'gbpm':null,'gbpe':'monerium-gbp-emoney','vgbp':'vnx-british-pound','egbp':null,
   // CHF
-  'vchf':'vnx-swiss-franc','chfm':null,
+  'vchf':'vnx-swiss-franc','chfm':null,'zchf':'frankencoin','achf':null,'dchf':'defi-franc',
   // JPY
-  'jpyc':'jpy-coin','jpym':null,'gyen':'gyen',
+  'jpyc':'jpy-coin','jpym':null,'gyen':'gyen','cjpy':null,
   // AUD
-  'audm':null,'audd':'novatti-australian-digital-dollar','audx':'aussie-dollar-token',
+  'audm':null,'audd':'novatti-australian-digital-dollar','audx':'aussie-dollar-token','audf':null,
   // Other Asia
-  'myrc':'blox-myrc','phpm':null,'xsgd':'xsgd',
+  'myrc':'blox-myrc','phpm':null,'pht':null,'xsgd':'xsgd',
   // Americas
-  'cadm':null,'mxnb':'mxnb','wmxn':null,'copm':null,'wcop':null,
-  'brlm':null,'wars':null,'wclp':null,'wpen':null,
+  'cadm':null,'qcad':null,'cadc':null,'mxnb':'mxnb','wmxn':null,'copm':null,'wcop':null,
+  'brlm':null,'brz':'brz-token','wars':null,'wclp':null,'wpen':null,
   // Africa
-  'kesm':null,'ngnm':null,'cghs':null,'zarm':null
+  'tryb':'bilira','kesm':null,'ngnm':null,'cghs':null,'zarm':null,'mzar':null
 };
 
 // In-memory ticker cache: { cgId: { data: [...], ts: Date.now() } }
@@ -1347,32 +1532,34 @@ window.toggleTradingPairs = toggleTradingPairs;
  * Calls the Netlify proxy function (same-origin, key stays server-side).
  * Falls back to a direct API call if not deployed via Netlify.
  */
-async function fetchTT(params) {
+// ── Per-asset TT API fetch (new v2 endpoint) ───────────────────────────────
+async function fetchAssetMetrics(assetId, metricIds, groupBy, startDate, endDate) {
   const qs = new URLSearchParams();
-  for (const [k, v] of Object.entries(params)) {
-    if (Array.isArray(v)) {
-      // Use repeated keys: metric_ids[]=x&metric_ids[]=y
-      v.forEach(item => qs.append(k + '[]', item));
-    } else {
-      qs.set(k, v);
-    }
-  }
+  metricIds.forEach(m => qs.append('metric_ids[]', m));
+  if (groupBy) qs.set('groupBy', groupBy);
+  if (startDate) qs.set('start', startDate);
+  if (endDate) qs.set('end', endDate);
+  const resp = await fetch(`${CONFIG.TT_BASE}/assets/${assetId}/metrics?${qs}`, {
+    headers: { 'Authorization': `Bearer ${CONFIG.TT_KEY}`, 'Accept': 'application/json' }
+  });
+  if (!resp.ok) return [];
+  const json = await resp.json();
+  return json.data || [];
+}
 
-  // Try proxy first (/tt-data — Cloudflare Pages Function or Netlify Function)
-  let resp;
-  try {
-    resp = await fetch(`/tt-data?${qs.toString()}`);
-    const ct = resp.headers.get('content-type') || '';
-    if (resp.status === 404 || ct.includes('text/html')) throw new Error('proxy not available');
-  } catch (_) {
-    // Direct fallback (works if Token Terminal allows CORS from your domain)
-    resp = await fetch(`${CONFIG.TT_BASE}/internal/metrics?${qs.toString()}`, {
-      headers: { 'Authorization': `Bearer ${CONFIG.TT_KEY}`, 'Accept': 'application/json' }
-    });
+// ── Batched per-asset fetch (replaces old bulk fetchTT) ─────────────────────
+async function fetchAllAssetsDirect(assetIds, metricIds, groupBy, startDate, endDate, onProgress) {
+  const BATCH = 10;
+  let allRows = [];
+  for (let i = 0; i < assetIds.length; i += BATCH) {
+    const batch = assetIds.slice(i, i + BATCH);
+    const results = await Promise.all(
+      batch.map(id => fetchAssetMetrics(id, metricIds, groupBy, startDate, endDate))
+    );
+    results.forEach(rows => allRows.push(...rows));
+    if (onProgress) onProgress(Math.min(100, Math.round((i + BATCH) / assetIds.length * 100)));
   }
-  if (!resp.ok) throw new Error(`API error ${resp.status}`);
-  const text = await resp.text();
-  return parseRows(text);
+  return allRows;
 }
 
 /**
@@ -1422,20 +1609,36 @@ function processAllData(mcRows, multiRows, chainRows) {
     const aid = r.asset_id;
     if (!aid) return;
     if (!mcByAsset[aid]) mcByAsset[aid] = [];
-    mcByAsset[aid].push({ ts: r.timestamp, v: parseFloat(r.value) || 0 });
+    // Support both JSON field names (new API) and CSV value column (legacy)
+    const v = r.asset_market_cap_circulating != null ? parseFloat(r.asset_market_cap_circulating) : parseFloat(r.value) || 0;
+    mcByAsset[aid].push({ ts: r.timestamp, v });
   });
   for (const aid in mcByAsset) {
     mcByAsset[aid].sort((a, b) => a.ts < b.ts ? -1 : 1);
   }
 
   // ── Group multi-metric rows by asset_id → metric_id → sorted ─────────────
+  const MULTI_METRICS = ['asset_transfer_volume','asset_dau','asset_transfer_count','asset_holders','asset_mints','asset_redemptions'];
   const multiByAsset = {};
   multiRows.forEach(r => {
-    const aid = r.asset_id, mid = r.metric_id;
-    if (!aid || !mid) return;
+    const aid = r.asset_id;
+    if (!aid) return;
     if (!multiByAsset[aid]) multiByAsset[aid] = {};
-    if (!multiByAsset[aid][mid]) multiByAsset[aid][mid] = [];
-    multiByAsset[aid][mid].push({ ts: r.timestamp, v: parseFloat(r.value) || 0 });
+    // New JSON API: each metric is a named field on the row
+    if (r.metric_id) {
+      // Legacy CSV format: metric_id + value columns
+      const mid = r.metric_id;
+      if (!multiByAsset[aid][mid]) multiByAsset[aid][mid] = [];
+      multiByAsset[aid][mid].push({ ts: r.timestamp, v: parseFloat(r.value) || 0 });
+    } else {
+      // New JSON API format: named fields per metric
+      MULTI_METRICS.forEach(mid => {
+        if (r[mid] != null) {
+          if (!multiByAsset[aid][mid]) multiByAsset[aid][mid] = [];
+          multiByAsset[aid][mid].push({ ts: r.timestamp, v: parseFloat(r[mid]) || 0 });
+        }
+      });
+    }
   });
   for (const aid in multiByAsset) {
     for (const mid in multiByAsset[aid]) {
@@ -1518,7 +1721,8 @@ function processAllData(mcRows, multiRows, chainRows) {
       m30:   sumVals(meta.id, 'asset_mints'),
       r30:   sumVals(meta.id, 'asset_redemptions'),
     };
-  }).filter(a => a.mc > 0 || (multiByAsset[a.id] && Object.keys(multiByAsset[a.id]).length > 0));
+  });
+  // Keep all assets — those with no TT data will show a "no data" placeholder
 
   // ── Build CHAIN_DATA ──────────────────────────────────────────────────────
   CHAIN_DATA = {};
@@ -1534,7 +1738,8 @@ function processAllData(mcRows, multiRows, chainRows) {
       const assetLatest = {};
       chRows.forEach(r => {
         const aid = r.asset_id;
-        const v   = parseFloat(r.value) || 0;
+        // Support both JSON field names (new API) and CSV value column (legacy)
+        const v = r.asset_market_cap_circulating != null ? parseFloat(r.asset_market_cap_circulating) : parseFloat(r.value) || 0;
         if (!assetLatest[aid] || r.timestamp > assetLatest[aid].ts) {
           assetLatest[aid] = { ts: r.timestamp, v };
         }
@@ -1774,51 +1979,66 @@ async function loadData() {
         showFreshness(ts);
         hideLoader();
         initDashboard();
+        scheduleAutoRefresh();
         return;
       }
     }
   } catch (_) {}
 
-  // ── Try live data Worker first ──────────────────────────────────────────
+  // ── Fetch fresh data: Worker first, then direct TT API fallback ─────────
+  console.info('[NSI] v24: fetching fresh data (Worker → direct TT API fallback)');
+
   try {
-    setProgress(10, 'Fetching live data…');
-    const wResp = await fetch(CONFIG.WORKER_URL, { signal: AbortSignal.timeout(12000) });
-    if (wResp.ok) {
-      const wd = await wResp.json();
-      if (wd.assets && wd.assets.length > 0) {
-        setProgress(80, 'Processing live data…');
-        processWorkerData(wd);
-        if (ASSETS.length > 0) {
-          const workerTs = wd.updated_at ? new Date(wd.updated_at).getTime() : Date.now();
-          try {
-            localStorage.setItem(CONFIG.CACHE_KEY, JSON.stringify({
-              ts: workerTs,
-              data: { ASSETS, MC_SERIES, DAU_SERIES: DAU_SERIES||{}, TXN_SERIES: TXN_SERIES||{}, ACTIVITY, CHAIN_DATA, CONT_DATES, CONT_SERIES }
-            }));
-          } catch(_) {}
-          showFreshness(workerTs);
-          hideLoader();
-          initDashboard();
-          return;
+    // ── Strategy 1: Fetch pre-processed data from Cloudflare Worker ────────
+    setProgress(10, 'Fetching from data worker…');
+    let workerOk = false;
+    try {
+      const wResp = await fetch(CONFIG.WORKER_URL);
+      if (wResp.ok) {
+        const wJson = await wResp.json();
+        if (wJson.data?.ASSETS?.length >= 30) {
+          console.info('[NSI] Worker returned', wJson.data.ASSETS.length, 'assets');
+          ASSETS = wJson.data.ASSETS;
+          MC_SERIES = wJson.data.MC_SERIES || {};
+          DAU_SERIES = wJson.data.DAU_SERIES || {};
+          TXN_SERIES = wJson.data.TXN_SERIES || {};
+          ACTIVITY = wJson.data.ACTIVITY || {};
+          CHAIN_DATA = wJson.data.CHAIN_DATA || {};
+          CONT_DATES = wJson.data.CONT_DATES || [];
+          CONT_SERIES = wJson.data.CONT_SERIES || {};
+          workerOk = true;
+          setProgress(80, 'Worker data loaded');
         }
       }
+    } catch (e) { console.warn('[NSI] Worker fetch failed:', e.message); }
+
+    // ── Strategy 2: Direct per-asset TT API calls ──────────────────────────
+    if (!workerOk) {
+      console.info('[NSI] Falling back to direct TT API (per-asset)…');
+      const ALL_IDS = ASSET_META.map(a => a.id);
+      const today = new Date().toISOString().slice(0, 10);
+      const ago30d = new Date(Date.now() - 30*86400000).toISOString().slice(0, 10);
+      const ago180d = new Date(Date.now() - 180*86400000).toISOString().slice(0, 10);
+
+      setProgress(15, 'Fetching market cap history (180d)…');
+      const mcRows = await fetchAllAssetsDirect(ALL_IDS,
+        ['asset_market_cap_circulating'], null, ago180d, today,
+        pct => setProgress(15 + Math.round(pct * 0.25), 'Fetching market caps…'));
+
+      setProgress(40, 'Fetching activity metrics (30d)…');
+      const multiRows = await fetchAllAssetsDirect(ALL_IDS,
+        ['asset_transfer_volume','asset_dau','asset_transfer_count','asset_holders','asset_mints','asset_redemptions'],
+        null, ago30d, today,
+        pct => setProgress(40 + Math.round(pct * 0.2), 'Fetching activity…'));
+
+      setProgress(60, 'Fetching chain data (30d)…');
+      const chainRows = await fetchAllAssetsDirect(ALL_IDS,
+        ['asset_market_cap_circulating'], 'chain', ago30d, today,
+        pct => setProgress(60 + Math.round(pct * 0.15), 'Fetching chains…'));
+
+      setProgress(75, 'Processing data…');
+      processAllData(mcRows, multiRows, chainRows);
     }
-  } catch(workerErr) {
-    console.warn('[NSI] Worker fetch failed, falling back to direct TT API:', workerErr.message);
-  }
-
-  // ── Fallback: direct Token Terminal API ──────────────────────────────────
-  const ALL_IDS = ASSET_META.map(a => a.id);
-  try {
-    setProgress(10, 'Fetching market cap history (180d)…');
-    const [mcRows, multiRows, chainRows] = await Promise.all([
-      fetchTT({ metric_ids: ['asset_market_cap_circulating'], groupBy: 'assets', interval: '180d', asset_ids: ALL_IDS }),
-      fetchTT({ metric_ids: ['asset_transfer_volume','asset_dau','asset_transfer_count','asset_holders','asset_mints','asset_redemptions'], groupBy: 'assets', interval: '30d', asset_ids: ALL_IDS }),
-      fetchTT({ metric_ids: ['asset_market_cap_circulating'], groupBy: 'chain-asset', interval: '30d', asset_ids: ALL_IDS }),
-    ]);
-    setProgress(75, 'Processing data…');
-
-    processAllData(mcRows, multiRows, chainRows);
 
     if (ASSETS.length === 0) throw new Error('API returned empty dataset — falling back to snapshot');
 
@@ -1835,6 +2055,7 @@ async function loadData() {
     showFreshness(Date.now());
     hideLoader();
     initDashboard();
+    scheduleAutoRefresh();
   } catch (err) {
     console.error('[NSI] fetch error:', err);
     setProgress(85, 'Using snapshot data from 2026-03-18…');
@@ -1968,15 +2189,6 @@ function sparklineSVG(pts, color='#2563eb', interactive=false, id='', mode='mc',
     ${inner}
     <rect width="${w}" height="${h}" fill="transparent" class="spark-hover-zone"/>
   </svg>`;
-}
-
-function signal(a) {
-  const s = (a.mc30 || 0) + (a.mc90 || 0) * 0.5;
-  if (s > 25) return '<span class="green bold">↑ Strong</span>';
-  if (s > 5)  return '<span class="green">↑ Growing</span>';
-  if (s < -25) return '<span class="red bold">↓ Weak</span>';
-  if (s < -5)  return '<span class="red">↓ Declining</span>';
-  return '<span class="muted">→ Stable</span>';
 }
 
 // ── DASHBOARD INIT (all rendering — runs after data is ready) ─────────────────
@@ -2531,6 +2743,23 @@ function renderCurrency(c) {
   assets.forEach(a => {
     const act = ACTIVITY[a.id] || {dau:0, txn:0};
     const volPerTxn = act.txn > 0 ? fmtM(a.v30 / act.txn) : "—";
+    const noData = !a.mc && !a.v30 && !a.h;
+    if (noData) {
+      cardsHtml += `
+      <div class="asset-card" style="opacity:.65">
+        <div class="asset-card-header">
+          <div>
+            <span class="asset-name">${a.name}</span>
+            <span class="asset-iss">${a.iss}</span>
+          </div>
+          <div style="text-align:right">
+            <span class="no-data-badge" style="font-size:10px">No data</span>
+          </div>
+        </div>
+        <div style="text-align:center;padding:18px 0;color:#94a3b8;font-size:11px">No data available on Token Terminal</div>
+      </div>`;
+      return;
+    }
     cardsHtml += `
     <div class="asset-card">
       <div class="asset-card-header">
@@ -2934,7 +3163,14 @@ function renderAllAssets() {
     </th>`).join("")}</tr></thead>`;
 
   const tbody = `<tbody>${sorted.map(a=>{
+    const noData = !a.mc && !a.v30 && !a.h;
     if (viewMode==="market") {
+      if (noData) return `<tr class="no-data-row">
+        <td class="bold"><span class="dot" style="background:${CMETA[a.cur].color}"></span>${a.name}<span class="no-data-badge">No data</span></td>
+        <td>${CMETA[a.cur].flag} ${a.cur}</td>
+        <td class="muted">${a.iss}</td>
+        <td colspan="11" class="na" style="text-align:center;font-size:11px">No data available on Token Terminal</td>
+      </tr>`;
       return `<tr>
         <td class="bold"><span class="dot" style="background:${CMETA[a.cur].color}"></span>${a.name}</td>
         <td>${CMETA[a.cur].flag} ${a.cur}</td>
@@ -2951,6 +3187,12 @@ function renderAllAssets() {
       const dauPct = maxDau>0 ? (a.dau/maxDau)*100 : 0;
       const txnPct = maxTxn>0 ? (a.txn/maxTxn)*100 : 0;
       const col = CMETA[a.cur].color;
+      if (noData) return `<tr class="no-data-row">
+        <td class="bold"><span class="dot" style="background:${col}"></span>${a.name}<span class="no-data-badge">No data</span></td>
+        <td>${CMETA[a.cur].flag} ${a.cur}</td>
+        <td class="muted">${a.iss}</td>
+        <td colspan="6" class="na" style="text-align:center;font-size:11px">No data available on Token Terminal</td>
+      </tr>`;
       return `<tr>
         <td class="bold"><span class="dot" style="background:${col}"></span>${a.name}</td>
         <td>${CMETA[a.cur].flag} ${a.cur}</td>
@@ -2977,100 +3219,6 @@ function sortAssets(col) {
   renderAllAssets();
 }
 renderAllAssets();
-
-// ── INSIGHTS ──────────────────────────────────────────────────────────────────
-const eurTotMC = tots.find(t=>t.c==="EUR")?.mc || 0;
-// tier: "analysis" | "risk" | "data" | "trend"
-const INSIGHTS = [
-  {
-    tier:"analysis", tag:"Velocity Divergence: Payment Rails vs Store-of-Value",
-    col:"#7c3aed", date:"Mar 19, 2026",
-    txt:"GBPM: 87x velocity (54.5M vol / 629K MC). EURCV: ~5x (389M vol / 76M MC). EURC: ~14x (6.77B vol / 485M MC). Most EUR assets sit below 1x. Two entirely different asset behaviours are grouped under the same 'stablecoin' label.",
-    impl:"Velocity ratio is the cleanest signal for separating payment infrastructure from capital parking vehicles. TradFi equivalents: money market funds (low velocity) vs. payment rails (high velocity)."
-  },
-  {
-    tier:"trend", tag:"SGD: Strongest Sustained Growth Outside EUR",
-    col:"#10b981", date:"Mar 19, 2026",
-    txt:"XSGD: +101.2% (180d), +30.3% (90d), +17.2% (30d). $215M in 30d volume. Monotonic acceleration — growth is compounding, not front-loaded.",
-    impl:"Rare triple-window consistency signals organic adoption rather than speculative rotation. SGD's role as Asia's reserve currency proxy makes XSGD the logical on-ramp for APAC institutional flows into on-chain settlement."
-  },
-  {
-    tier:"risk", tag:"EURA Structural Collapse — Redemptions Uncontrolled",
-    col:"#dc2626", date:"Mar 19, 2026",
-    txt:"EURA (Angle Protocol): -84.8% (180d), -87.6% (90d), -33.9% (30d). Supply now at $3.1M. Redemptions persistently exceed mints — no sign of stabilisation at any time horizon.",
-    impl:"Protocol-specific risk, not EUR market risk. Supply contraction of this magnitude over 90d suggests loss of issuer credibility or collateral concern. Not recoverable without a structural reset. Watch for contagion to EURA-adjacent DeFi pools."
-  },
-  {
-    tier:"analysis", tag:"EURCV: Institutional On-Chain Euro",
-    col:"#3b82f6", date:"Mar 19, 2026",
-    txt:"EURCV (Société Générale — Forge): +15.0% (180d), +13.5% (90d), +17.7% (30d). 1,708 holders, $389M 30d volume. Market cap €75.9M — small supply, enormous throughput. A bank-issued MiCA-compliant EUR stablecoin gaining institutional traction.",
-    impl:"Low holder count + high volume = concentrated institutional usage. This is the architecture regulators want: permissioned issuance, high traceability. EURCV is the benchmark for what regulated EUR stablecoins look like post-MiCA."
-  },
-  {
-    tier:"data", tag:"Net Mint/Redemption Flows — 30d",
-    col:"#0d9488", date:"Mar 19, 2026",
-    txt:"Net minting (supply expanding): EURC +$17.5M, EURCV +$12.1M, XSGD +$2.9M, MYRC +$252K. Net redemption pressure (supply contracting): EURA -$1.5M, MXNB -$545K, EUR0+ -$549K, VCHF -$287K.",
-    impl:"Net flow is the cleanest leading indicator of issuer health. Sustained redemption without matching mint activity = supply collapse in motion."
-  },
-  {
-    tier:"trend", tag:"ARS: On-Chain Inflation Hedge",
-    col:"#a855f7", date:"Mar 9, 2026",
-    txt:"WARS (Argentine Peso): +172.6% (180d), +89.1% (90d), +36.6% (30d). 404K on-chain transactions in 30d — highest tx count of any EM stablecoin tracked.",
-    impl:"ARS stablecoin growth mirrors Argentina's inflation cycle, not crypto sentiment. Transaction volume indicates real economic utility: wage payments, cross-border transfers, dollarisation proxies. This is DeFi's most unambiguous real-economy adoption signal in this dataset."
-  },
-  {
-    tier:"analysis", tag:"JPY Market: Clear Winner-Takes-Most Dynamic",
-    col:"#e11d48", date:"Mar 14, 2026",
-    txt:"JPYC: +49.4% (180d), +23.7% (90d). At $11.7M, consolidating. GYEN (GMO Trust): -20.9% (180d), -13.5% (90d), -1.9% (30d). Two competing issuer strategies, one winning on growth, one on institutional backing.",
-    impl:"Regulatory clarity in Japan (FSA-licensed stablecoins) is creating winner-takes-most consolidation within JPY. JPYC's retail adoption curve is outpacing GYEN's institutional positioning. Watch for a potential licensing convergence that forces a merger or white-labelling deal."
-  },
-  {
-    tier:"data", tag:"EUR Concentration Risk",
-    col:"#2563eb", date:"Mar 4, 2026",
-    txt:`EUR stablecoins: ${((eurTotMC/totMC)*100).toFixed(1)}% of total non-USD supply at ${fmtM(eurTotMC)}. Within EUR: EURC ~${tots.find(t=>t.c==="EUR") ? ((ASSETS.find(a=>a.id==="eurc")?.mc||0)/eurTotMC*100).toFixed(0) : "55"}% single-issuer share. EURS second. EURCV third and fastest-growing.`,
-    impl:"Single-issuer concentration at sector level is a systemic risk flag. EURC's dominance means Circle's operational health directly determines 50%+ of the entire non-USD on-chain stablecoin market."
-  },
-  {
-    tier:"risk", tag:"MXN: Elevated Volume on Shrinking Supply",
-    col:"#22c55e", date:"Feb 27, 2026",
-    txt:"MXNB: -10.2% (180d), -37.5% (30d) MC contraction. Yet $177M in 30d volume — velocity exceeding 100x. Supply contracting while velocity spikes — inconsistent with organic growth.",
-    impl:"High velocity on declining supply often signals a winding-down asset being actively exited rather than used. Redemptions exceeding mints confirm supply contraction. This is not a growth pattern — it is a liquidation pattern."
-  },
-  {
-    tier:"trend", tag:"EM Frontier: MYR and AUD Showing Genuine Adoption",
-    col:"#8b5cf6", date:"Mar 9, 2026",
-    txt:"MYRC (Malaysian Ringgit): +79.1% (180d), +26.2% (90d), +20.1% (30d). AUDD (Australian Dollar): +3063.7% (180d), +27.5% (90d). Both show accelerating, multi-window growth — not one-time events.",
-    impl:"Rare to see consistent compounding across 30/90/180d windows. These are organic adoption curves. MYRC is particularly notable: MYR is not typically an on-chain currency, suggesting a specific DeFi use case driving demand. Worth monitoring for issuer commentary."
-  },
-  {
-    tier:"data", tag:"African Stablecoins: High Growth, Small Base",
-    col:"#f59e0b", date:"Feb 12, 2026",
-    txt:"ZARM (ZAR): +228% (180d), +339% (90d), +47.3% (30d). NGNM (NGN): +215.9% (180d), +108.1% (90d). KESM (KES): small but growing. All Celo-chain. Combined MC still under $5M.",
-    impl:"Growth rates are real but the base is tiny — not yet investable at institutional scale. The Celo infrastructure concentration means African stablecoin exposure is proxied through Celo validator economics, not the stablecoins themselves. These are canary-in-the-coalmine signals for broader EM on-chain adoption."
-  },
-];
-// Tier labels
-const TIER_LABELS = {
-  analysis: "Analysis",
-  risk: "⚠ Risk Signal",
-  data: "Data Summary",
-  trend: "Trend Watch",
-};
-// Render insights
-const insGrid = document.getElementById("insights-grid");
-INSIGHTS.forEach(ins=>{
-  insGrid.innerHTML += `
-  <div class="insight-card" style="border-left:4px solid ${ins.col}">
-    <div style="display:flex;align-items:center;gap:6px;margin-bottom:5px">
-      <span class="ins-tier ${ins.tier}">${TIER_LABELS[ins.tier]}</span>
-      <span style="font-size:9.5px;color:#94a3b8;font-weight:600;text-transform:uppercase;letter-spacing:.05em">${ins.date}</span>
-    </div>
-    <div class="insight-tag" style="color:${ins.col}">${ins.tag}</div>
-    <div class="insight-txt">${ins.txt}</div>
-    ${ins.impl ? `<div class="ins-implication">${ins.impl}</div>` : ''}
-  </div>`;
-});
-
 
 // ── BY BLOCKCHAIN ─────────────────────────────────────────────────────────────
 const chainGrid = document.getElementById('chain-grid');
@@ -3415,22 +3563,79 @@ buildPieChart();
 initWorldMap();
 
 
-// Signals table
-// Signals table
-const sigTbl = document.getElementById("signals-table");
-const sigAssets = [...ASSETS].filter(a=>a.mc30!=null||a.mc90!=null||a.mc180!=null).sort((a,b)=>b.mc-a.mc).slice(0,22);
-sigTbl.innerHTML = `<thead><tr>
-  <th>Asset</th><th>Currency</th><th>Market Cap</th>
-  <th>30d</th><th>90d</th><th>180d</th><th>Signal</th>
-</tr></thead><tbody>${
-  sigAssets.map(a=>`<tr>
-    <td class="bold"><span class="dot" style="background:${CMETA[a.cur].color}"></span>${a.name}</td>
-    <td>${CMETA[a.cur].flag} ${a.cur}</td>
-    <td class="bold">${fmtM(a.mc)}</td>
-    <td>${pctHtml(a.mc30)}</td><td>${pctHtml(a.mc90)}</td><td>${pctHtml(a.mc180)}</td>
-    <td style="font-size:11px">${signal(a)}</td>
-  </tr>`).join("")
-}</tbody>`;
+// ── CeD COMPARISON (Centralized vs Decentralized) ───────────────────────────
+(function(){
+  if (!ASSETS || !ASSETS.length) return;
+  const metaMap = {};
+  ASSET_META.forEach(m => metaMap[m.id] = m);
+
+  const cAssets = ASSETS.filter(a => metaMap[a.id]?.type === "C");
+  const dAssets = ASSETS.filter(a => metaMap[a.id]?.type === "D");
+
+  function aggGroup(list) {
+    let mc=0, vol=0, txn=0, dau=0, holders=0;
+    list.forEach(a => {
+      mc += a.mc || 0;
+      vol += a.v30 || a.vol30 || 0;
+      holders += a.h || a.holders || 0;
+      const act = (typeof ACTIVITY !== 'undefined') ? ACTIVITY[a.id] : null;
+      txn += act?.txn || a.txn30 || 0;
+      dau += act?.dau || a.dau || 0;
+    });
+    return {mc, vol, txn, dau, holders, count: list.length};
+  }
+
+  const cAgg = aggGroup(cAssets);
+  const dAgg = aggGroup(dAssets);
+
+  function renderKPIs(el, agg) {
+    const kpis = [
+      {val: fmtM(agg.mc), lab: "Market Cap"},
+      {val: fmtM(agg.vol), lab: "30d Volume"},
+      {val: fmtN(agg.dau), lab: "Daily Senders"},
+      {val: fmtN(agg.holders), lab: "Holders"},
+      {val: fmtN(agg.txn), lab: "30d Txns"},
+      {val: agg.count, lab: "Assets"}
+    ];
+    el.innerHTML = kpis.map(k => `<div class="ced-kpi"><div class="ced-kpi-val">${k.val}</div><div class="ced-kpi-lab">${k.lab}</div></div>`).join("");
+  }
+
+  renderKPIs(document.getElementById("ced-kpis-c"), cAgg);
+  renderKPIs(document.getElementById("ced-kpis-d"), dAgg);
+
+  // Top assets by MC
+  function renderTopAssets(el, list) {
+    const sorted = [...list].sort((a,b) => (b.mc||0) - (a.mc||0)).slice(0, 5);
+    el.innerHTML = sorted.map(a => `<div class="ced-asset-row"><span class="ced-ar-name">${(CMETA[metaMap[a.id]?.cur]?.flag||"")} ${a.name}</span><span class="ced-ar-mc">${fmtM(a.mc||0)}</span></div>`).join("");
+  }
+
+  renderTopAssets(document.getElementById("ced-assets-c"), cAssets);
+  renderTopAssets(document.getElementById("ced-assets-d"), dAssets);
+
+  // VS bar (MC share)
+  // Comparison bars
+  const bars = [
+    {label: "Market Cap", c: cAgg.mc, d: dAgg.mc, fmt: fmtM},
+    {label: "30d Volume", c: cAgg.vol, d: dAgg.vol, fmt: fmtM},
+    {label: "Daily Active Users", c: cAgg.dau, d: dAgg.dau, fmt: fmtN},
+    {label: "Holders", c: cAgg.holders, d: dAgg.holders, fmt: fmtN},
+    {label: "30d Transactions", c: cAgg.txn, d: dAgg.txn, fmt: fmtN}
+  ];
+
+  const barsEl = document.getElementById("ced-bars");
+  barsEl.innerHTML = bars.map(b => {
+    const total = b.c + b.d;
+    const cPct = total > 0 ? Math.round(b.c / total * 100) : 50;
+    const dPct = 100 - cPct;
+    return `<div class="ced-bar-row">
+      <div class="ced-bar-label">${b.label}</div>
+      <div class="ced-bar-track">
+        <div class="ced-bar-fill-c" style="width:${cPct}%" title="Centralized: ${b.fmt(b.c)}">${cPct}%</div>
+        <div class="ced-bar-fill-d" style="width:${dPct}%" title="Decentralized: ${b.fmt(b.d)}">${dPct}%</div>
+      </div>
+    </div>`;
+  }).join("");
+})();
 
 // ── DEFI TAB (DeFiLlama Integration) ──────────────────────────────────────────
 (function(){

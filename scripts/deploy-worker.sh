@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
-# Deploy Cloudflare Worker v5
-cd cf-deploy
-npx wrangler deploy nonusd-data-worker.js --name nonusd-data
+# Deploy nonUSD Data Worker to Cloudflare Workers
+set -e
+
+echo "Deploying Worker to Cloudflare Workers..."
+cd "$(dirname "$0")/../cf-deploy"
+npx wrangler deploy
+echo "Worker deployed to https://nonusd-data.0xtakeprofits.workers.dev"
