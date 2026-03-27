@@ -1,0 +1,12 @@
+name = "nonusd-data"
+main = "worker.js"
+compatibility_date = "2024-09-23"
+
+# Cron trigger: every 6 hours
+[triggers]
+crons = ["0 */6 * * *"]
+
+# KV Namespace binding
+[[kv_namespaces]]
+binding = "NSI_KV"
+id = "13f07bc0afbc4044b54d02d3804b9597"
